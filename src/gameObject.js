@@ -136,22 +136,22 @@ export class GameObject {
     }
 
     updatePositionBasedOnKeys(){
-        if(this.keysDown.includes('ArrowUp') || this.keysDown.includes('KeyW')) {
+        if(this.keysDown.includes('ArrowUp') || this.keysDown.includes('w')) {
             this.rectangle.y -= 5;
             this.shape.y -= 5;
         }
 
-        if(this.keysDown.includes('ArrowRight') || this.keysDown.includes('KeyD')) {
+        if(this.keysDown.includes('ArrowRight') || this.keysDown.includes('d')) {
             this.rectangle.x += 5;
             this.shape.x += 5;
         }
 
-        if(this.keysDown.includes('ArrowDown') || this.keysDown.includes('KeyS')) {
+        if(this.keysDown.includes('ArrowDown') || this.keysDown.includes('s')) {
             this.rectangle.y += 5;
             this.shape.y += 5;
         }
         
-        if(this.keysDown.includes('ArrowLeft') || this.keysDown.includes('KeyA')) {
+        if(this.keysDown.includes('ArrowLeft') || this.keysDown.includes('a')) {
             this.rectangle.x -= 5;
             this.shape.x -= 5;
         }
