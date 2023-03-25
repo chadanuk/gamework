@@ -334,7 +334,7 @@ export class GameObject {
     }
 
     hasNoVelocity() {
-        return (this.velocity.x === 0 && this.velocity.y === 0);
+        return (this.velocity.x === 0 && this.velocity.y === 0 || (this.controlledByKeyPad && this.keysDown.length === 0));
     }
 
     detectCollisions(object) {
