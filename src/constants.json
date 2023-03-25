@@ -1,6 +1,4 @@
 {
-    "HAMSTER_RADIUS": 25,
-    "WALL_DEPTH": 20,
     "COLOURS": {
         "modalBorderColour": "#000000",
         "modalBackgroundColour": "rgba(150,150, 200, 0.98)",
