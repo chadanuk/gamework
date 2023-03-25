@@ -173,6 +173,7 @@ export class Scene {
 
             object.calculatePosition();
             if(this.showHitBoxes) {
+                object.setShowHitBoxes(true);
                 object.drawHitBox(context);
             }
 

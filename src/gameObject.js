@@ -43,6 +43,12 @@ export class GameObject {
         return this;
     }
 
+    setShowHitBox(showHitBox) {
+        this.showHitBox = showHitBox
+
+        return this;
+    }
+
     setAsset(asset) {
         this.asset = asset;
         return this;
@@ -241,6 +247,9 @@ export class GameObject {
     }
 
     drawHitBox(context) {
+        if(!this.showHitBox) {
+            return;
+        }
         context.beginPath();
         context.strokeStyle = 'red';
         context.strokeRect(this.rectangle.x, this.rectangle.y, this.rectangle.width, this.rectangle.height);
