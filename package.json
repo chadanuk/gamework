@@ -1,19 +1,15 @@
 {
-  "name": "gamework",
-  "version": "1.0.0",
-  "description": "A 2D js game framework",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/chadanuk/gamework.git"
-  },
-  "author": "Dan Chadwick",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/chadanuk/gamework/issues"
-  },
-  "homepage": "https://github.com/chadanuk/gamework#readme"
+    "name": "gamework",
+    "version": "1.0.0",
+    "description": "A 2D js game framework",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/chadanuk/gamework.git"
+    },
+    "author": "Dan Chadwick",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/chadanuk/gamework/issues"
+    },
+    "homepage": "https://github.com/chadanuk/gamework#readme"
 }
