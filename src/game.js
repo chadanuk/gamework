@@ -43,6 +43,9 @@ export class Game {
         this.canvas.removeEventListener('touchstart', this.handlePointerDown);
         this.canvas.removeEventListener('touchmove', this.handlePointerMove);
         this.canvas.removeEventListener('touchend', this.handlePointerEnd);
+
+        document.removeEventListener('keydown', this.handleKeyDown.bind);
+        document.removeEventListener('keyup', this.handleKeyUp.bind);
     }
 
     addEventListeners() {
@@ -57,13 +60,13 @@ export class Game {
         this.canvas.addEventListener('touchmove', this.handlePointerMove.bind(this), false);
         this.canvas.addEventListener('touchend', this.handlePointerEnd.bind(this), false);
 
-        this.canvas.addEventListener('keydown', this.handleKeyDown.bind(this), false);
-        this.canvas.addEventListener('keyup', this.handleKeyUp.bind(this), false);
+        document.addEventListener('keydown', this.handleKeyDown.bind(this), false);
+        document.addEventListener('keyup', this.handleKeyUp.bind(this), false);
     }
 
     handleKeyDown(event) {
         this.keysDown.push(event.key);
-
+        this.keysDown = [...new Set(this.keysDown)];
         this.scenes.forEach((scene) => {
             scene.handleKeysDown(this.keysDown);
         });
