@@ -58,12 +58,10 @@ export class CircleGameObject extends GameObject {
     detectCollisions(object) {
         if(object instanceof CircleGameObject) {
             this.detectCollisionsWithOtherCircle(object);
-            this.handleCollisions();
             return;
         }
         
         this.detectCollisionsWithRectangle(object);
-        this.handleCollisions();
     }
 
     drawHitBox(context) {
