@@ -27,6 +27,7 @@ export class GameObject {
         this.sprite = null;
         this.showHitBox = false;
         this.controlledByKeyPad = false;
+        this.keysDown = [];
 
         this.accelerateInDirectionOfTravelOnly = false;
         this.drawTrace = false;
@@ -134,9 +135,35 @@ export class GameObject {
         this.shape.y = position.y;
     }
 
+    updatePositionBasedOnKeys(){
+        if(this.keysDown.includes('ArrowUp')) {
+            this.rectangle.y -= 5;
+            this.shape.y -= 5;
+        }
+
+        if(this.keysDown.includes('ArrowRight')) {
+            this.rectangle.x += 5;
+            this.shape.x += 5;
+        }
+
+        if(this.keysDown.includes('ArrowDown')) {
+            this.rectangle.y += 5;
+            this.shape.y += 5;
+        }
+        
+        if(this.keysDown.includes('ArrowLeft')) {
+            this.rectangle.x -= 5;
+            this.shape.x -= 5;
+        }
+    }
+
     calculatePosition() {
         if(this.paused) {
             return;
+        }
+
+        if(this.controlledByKeyPad) {
+            return this.updatePositionBasedOnKeys();
         }
         this.updateVelocity();
         
@@ -153,28 +180,14 @@ export class GameObject {
     }
 
     handleKeysDown(keysDown) {
-        if(keysDown.includes('ArrowUp')) {
-            this.rectangle.y -= 5;
-            this.shape.y -= 5;
-        }
-
-        if(keysDown.includes('ArrowRight')) {
-            this.rectangle.x += 5;
-            this.shape.x += 5;
-        }
-
-        if(keysDown.includes('ArrowDown')) {
-            this.rectangle.y += 5;
-            this.shape.y += 5;
-        }
-        
-        if(keysDown.includes('ArrowLeft')) {
-            this.rectangle.x -= 5;
-            this.shape.x -= 5;
+        if(this.controlledByKeyPad) {
+            this.keysDown = keysDown;
         }
     }
 
     handleKeyUp(keysDown, keyUp) {
+        this.keysDown = keysDown;
+        
         if(keyUp.includes('up')) {
             
         }
