@@ -1,4 +1,4 @@
-import * as baseConstants from './constants.json';
+import {default as baseConstants} from './constants.json';
 
 export class Game {
     constructor(canvas){
