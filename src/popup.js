@@ -1,4 +1,3 @@
-import { BUTTONS, COLOURS, POPUP } from "../constants";
 import { GameObject } from "./gameObject";
 import { Rectangle } from "./rectangle";
 import { TextItem } from "./textItem";
@@ -7,9 +6,9 @@ export class Popup extends GameObject {
     constructor(name, scene, canvas, title = '', rectangle = null) {
         super(scene, name, rectangle ?? new Rectangle((canvas.width - (0.8 * canvas.width)) / 8, 50, 0.4 * canvas.width, 0.2 * canvas.height));
         this.canvas = canvas;
-        this.title = new TextItem(scene, `${name}.title`, {x: this.rectangle.x + 40, y: this.rectangle.y + POPUP.padding}, POPUP.fontSize, POPUP.fontType, POPUP.textColour, title);
+        this.title = new TextItem(scene, `${name}.title`, {x: this.rectangle.x + 40, y: this.rectangle.y + window.gamework.constants.POPUP.padding}, window.gamework.constants.POPUP.fontSize, window.gamework.constants.POPUP.fontType, window.gamework.constants.POPUP.textColour, title);
         this.buttons = [];
-        this.verticalButtonSpacing = BUTTONS.spacing;
+        this.verticalButtonSpacing = window.gamework.constants.BUTTONS.spacing;
     }
 
     setTitle(title) {
@@ -56,8 +55,8 @@ export class Popup extends GameObject {
         context.beginPath();
         context.fillStyle = 'rgba(0,0,0,0.5)';
         context.fillRect(0,0, this.canvas.width, this.canvas.height);
-        context.strokeStyle = COLOURS.modalBorderColour;
-        context.fillStyle = COLOURS.modalBackgroundColour;
+        context.strokeStyle = window.gamework.constants.COLOURS.modalBorderColour;
+        context.fillStyle = window.gamework.constants.COLOURS.modalBackgroundColour;
         context.fillRect(this.rectangle.x, this.rectangle.y, this.rectangle.width, this.rectangle.height);
         context.fill();
         context.strokeRect(this.rectangle.x, this.rectangle.y, this.rectangle.width, this.rectangle.height);

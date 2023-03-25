@@ -1,5 +1,3 @@
-import { ASSETS } from "../constants";
-
 export class Asset {
     constructor(imageSrc, gameObject = null, repeat = true) {
         this.gameObject = gameObject;
@@ -9,12 +7,12 @@ export class Asset {
         this.repeat = repeat;
         this.load();
         if(!this.findAsset(imageSrc)) {
-            ASSETS.push(this);
+            window.gamework.constants.ASSETS.push(this);
         }
     }
 
     findAsset(imageSrc) {
-        const foundAsset = ASSETS.find((assetInData) => {
+        const foundAsset = window.gamework.constants.ASSETS.find((assetInData) => {
             return assetInData.imageSrc === imageSrc;
         });
         

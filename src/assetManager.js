@@ -1,9 +1,9 @@
-import { ASSETS, COLOURS, POPUP } from "../constants";
+
 import { Popup } from "./popup";
 
 export class AssetManager {
     constructor(canvas) {
-        this.assets = ASSETS;
+        this.assets = window.gamework.constants.ASSETS;
         this.loadedInterval = null;
         this.allAssetsLoaded = false;
         this.loadingProgress = 0;
@@ -38,16 +38,16 @@ export class AssetManager {
         this.popup.draw(context);
         // Draw progress bar
         context.fillStyle = 'rgba(0, 0, 0, 0.8)';
-        context.fillRect(this.popup.rectangle.x + POPUP.padding, this.popup.rectangle.y + 50, (this.popup.rectangle.width - (2 * POPUP.padding)) * ((this.loadingProgress) / this.assets.length), 20);
+        context.fillRect(this.popup.rectangle.x + window.gamework.constants.POPUP.padding, this.popup.rectangle.y + 50, (this.popup.rectangle.width - (2 * window.gamework.constants.POPUP.padding)) * ((this.loadingProgress) / this.assets.length), 20);
         context.fill();
         
         context.beginPath();
-        context.fillStyle = COLOURS.modalTextColour;
+        context.fillStyle = window.gamework.constants.COLOURS.modalTextColour;
         context.font = '16px sans-serif';
         
         const percent = Math.ceil(this.loadingProgress / this.assets.length * 100);
         
-        context.fillText(`Assets loading: ${percent}%`, this.popup.rectangle.x + POPUP.padding, this.popup.rectangle.y + 100);
+        context.fillText(`Assets loading: ${percent}%`, this.popup.rectangle.x + window.gamework.constants.POPUP.padding, this.popup.rectangle.y + 100);
         context.fill();
         requestAnimationFrame(() => {
             this.drawLoadingProgress(context);

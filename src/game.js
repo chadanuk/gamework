@@ -1,3 +1,5 @@
+import * as baseConstants from './constants';
+
 export class Game {
     constructor(canvas){
         this.canvas = canvas;
@@ -14,6 +16,15 @@ export class Game {
         this.pointerDownPosition = null;
         this.initialiseContext();
         this.addEventListeners();
+
+        this.constants = baseConstants;
+        window.gamework = this;
+    }
+    
+    setConstants(constants) {
+        this.constants = constants;
+
+        return this;
     }
     
     pause() {
