@@ -17,12 +17,14 @@ export class Game {
         this.initialiseContext();
         this.addEventListeners();
 
+        this.keysDown = [];
+
         this.constants = baseConstants;
         window.gamework = this;
     }
     
     setConstants(constants) {
-        this.constants = constants;
+        this.constants = {...this.constants, ...constants};
 
         return this;
     }
@@ -54,6 +56,27 @@ export class Game {
         this.canvas.addEventListener('touchstart', this.handlePointerDown.bind(this), false);
         this.canvas.addEventListener('touchmove', this.handlePointerMove.bind(this), false);
         this.canvas.addEventListener('touchend', this.handlePointerEnd.bind(this), false);
+
+        this.canvas.addEventListener('keydown', this.handleKeyDown.bind(this), false);
+        this.canvas.addEventListener('keyup', this.handleKeyUp.bind(this), false);
+    }
+
+    handleKeyDown(event) {
+        this.keysDown.push(event.key);
+
+        this.scenes.forEach((scene) => {
+            scene.handleKeysDown(this.keysDown);
+        });
+    }
+
+    handleKeyUp(event) {
+        this.keysDown = this.keysDown.filter((keyDown) => {
+            return keyDown !== event.key;
+        });
+
+        this.scenes.forEach((scene) => {
+            scene.handleKeyUp(this.keysDown, event.key);
+        });
     }
 
     getPositionFromPointerEvent(event) {

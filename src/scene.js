@@ -82,6 +82,22 @@ export class Scene {
 
         return foundObjectIndex;
     }
+    
+    handleKeysDown(keysDown) {
+        this.objects.forEach((object) => {
+            if(object.controlledByKeyPad) {
+                object.handleKeysDown(keysDown);
+            }
+        });
+    }
+    
+    handleKeyUp(keysDown, keyUp) {
+        this.objects.forEach((object) => {
+            if(object.controlledByKeyPad) {
+                object.handleKeyUp(keysDown, keyUp);
+            }
+        });
+    }
 
     handlePointerDown(position) {
         if(this.deleted || this.hidden) {

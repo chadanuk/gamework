@@ -26,6 +26,8 @@ export class GameObject {
         this.asset = null;
         this.sprite = null;
         this.showHitBox = false;
+        this.controlledByKeyPad = false;
+
         this.accelerateInDirectionOfTravelOnly = false;
         this.drawTrace = false;
         this.trace = [];
@@ -142,6 +144,42 @@ export class GameObject {
         }
 
         this.onPositionChange.call(this);
+    }
+
+    handleKeysDown(keysDown) {
+        if(keysDown.includes('up')) {
+            this.velocity.y -= 5;
+        }
+
+        if(keysDown.includes('right')) {
+            this.velocity.x += 5;
+        }
+
+        if(keysDown.includes('down')) {
+            this.velocity.y += 5;
+        }
+        
+        if(keysDown.includes('left')) {
+            this.velocity.x -= 5;
+        }
+    }
+
+    handleKeyUp(keysDown, keyUp) {
+        if(keyUp.includes('up')) {
+            
+        }
+
+        if(keyUp.includes('right')) {
+            
+        }
+
+        if(keyUp.includes('down')) {
+            
+        }
+        
+        if(keyUp.includes('left')) {
+            
+        }
     }
 
     handlePointerDown(position) {
