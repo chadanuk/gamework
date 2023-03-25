@@ -1,5 +1,3 @@
-import { ASSETS } from "../constants";
-
 export class Sprite {
         constructor(imageSrc, gameObject, animate = true) {
             this.gameObject = gameObject;
@@ -14,7 +12,7 @@ export class Sprite {
             this.frameRate = 20;
             this.column = 0;
             this.row = 0;
-            ASSETS.push(this);
+            window.gamework.constants.ASSETS.push(this);
         }
         
         setColumns(value) {

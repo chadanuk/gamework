@@ -1,18 +1,17 @@
-import { BUTTONS } from "../constants";
 import { GameObject } from "./gameObject";
 import { Rectangle } from "./rectangle";
 import { TextItem } from "./textItem";
 
 export class Button extends GameObject {
     constructor(name, scene, text, onTap) {
-        super(scene, name, new Rectangle(0, 0, BUTTONS.minWidth, BUTTONS.minHeight));
+        super(scene, name, new Rectangle(0, 0, window.gamework.constants.BUTTONS.minWidth, window.gamework.constants.BUTTONS.minHeight));
 
-        this.text = new TextItem(scene, name, {x: this.rectangle.x, y: this.rectangle.y}, BUTTONS.fontSize, BUTTONS.fontType, BUTTONS.textColour, text);
-        this.buttonFontSize = parseFloat(BUTTONS.fontSize);
+        this.text = new TextItem(scene, name, {x: this.rectangle.x, y: this.rectangle.y}, window.gamework.constants.BUTTONS.fontSize, window.gamework.constants.BUTTONS.fontType, window.gamework.constants.BUTTONS.textColour, text);
+        this.buttonFontSize = parseFloat(window.gamework.constants.BUTTONS.fontSize);
         this.onTapButton = onTap;
 
-        this.strokeStyle = BUTTONS.borderColour;
-        this.fillStyle = BUTTONS.backgroundColour;
+        this.strokeStyle = window.gamework.constants.BUTTONS.borderColour;
+        this.fillStyle = window.gamework.constants.BUTTONS.backgroundColour;
         this.active = false;
     }
 
@@ -20,7 +19,7 @@ export class Button extends GameObject {
         this.rectangle.x = position.x;
         this.rectangle.y =  position.y;
 
-        this.text.setPosition({x: position.x + BUTTONS.padding, y: position.y + this.buttonFontSize + BUTTONS.padding});
+        this.text.setPosition({x: position.x + window.gamework.constants.BUTTONS.padding, y: position.y + this.buttonFontSize + window.gamework.constants.BUTTONS.padding});
     }
 
     setWidth(width) {
@@ -36,8 +35,8 @@ export class Button extends GameObject {
         if(this.deleted) {
             return;
         }
-        this.strokeStyle = BUTTONS.activeBorderColour;
-        this.fillStyle = BUTTONS.activeBackgroundColour;
+        this.strokeStyle = window.gamework.constants.BUTTONS.activeBorderColour;
+        this.fillStyle = window.gamework.constants.BUTTONS.activeBackgroundColour;
     }
     
     handlePointerHoverLeave(position) {
@@ -46,8 +45,8 @@ export class Button extends GameObject {
             return;
         }
         document.body.style.cursor = 'default';
-        this.strokeStyle = BUTTONS.borderColour;
-        this.fillStyle = BUTTONS.backgroundColour;
+        this.strokeStyle = window.gamework.constants.BUTTONS.borderColour;
+        this.fillStyle = window.gamework.constants.BUTTONS.backgroundColour;
     }
 
     handlePointerHover() {
@@ -55,8 +54,8 @@ export class Button extends GameObject {
             document.body.style.cursor = 'default';
             return;
         }
-        this.strokeStyle = BUTTONS.hoverBorderColour;
-        this.fillStyle = BUTTONS.hoverBackgroundColour;
+        this.strokeStyle = window.gamework.constants.BUTTONS.hoverBorderColour;
+        this.fillStyle = window.gamework.constants.BUTTONS.hoverBackgroundColour;
         document.body.style.cursor = 'pointer';
     }
 
@@ -65,8 +64,8 @@ export class Button extends GameObject {
             return;
         }
         this.active = true;
-        this.strokeStyle = BUTTONS.activeBorderColour;
-        this.fillStyle = BUTTONS.activeBackgroundColour;
+        this.strokeStyle = window.gamework.constants.BUTTONS.activeBorderColour;
+        this.fillStyle = window.gamework.constants.BUTTONS.activeBackgroundColour;
     }
 
     handlePointerEnd(movement) {

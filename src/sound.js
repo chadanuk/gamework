@@ -1,5 +1,3 @@
-import { ASSETS } from "../constants";
-
 export class Sound {
     constructor(name, sound, loop = false, standardVolume = 4) {
         this.name = name;
@@ -10,7 +8,7 @@ export class Sound {
         this.standardVolume = standardVolume;
         this.playing = false;
         this.load()
-        ASSETS.push(this);
+        window.gamework.constants.ASSETS.push(this);
     }
 
     load() {
