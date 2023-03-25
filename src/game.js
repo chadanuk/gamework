@@ -67,6 +67,7 @@ export class Game {
     handleKeyDown(event) {
         this.keysDown.push(event.key);
         this.keysDown = [...new Set(this.keysDown)];
+        
         this.scenes.forEach((scene) => {
             scene.handleKeysDown(this.keysDown);
         });

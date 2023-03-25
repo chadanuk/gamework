@@ -153,20 +153,24 @@ export class GameObject {
     }
 
     handleKeysDown(keysDown) {
-        if(keysDown.includes('up')) {
-            this.velocity.y -= 5;
+        if(keysDown.includes('ArrowUp')) {
+            this.rectangle.y -= 5;
+            this.shape.y -= 5;
         }
 
-        if(keysDown.includes('right')) {
-            this.velocity.x += 5;
+        if(keysDown.includes('ArrowRight')) {
+            this.rectangle.x += 5;
+            this.shape.x += 5;
         }
 
-        if(keysDown.includes('down')) {
-            this.velocity.y += 5;
+        if(keysDown.includes('ArrowDown')) {
+            this.rectangle.y += 5;
+            this.shape.y += 5;
         }
         
-        if(keysDown.includes('left')) {
-            this.velocity.x -= 5;
+        if(keysDown.includes('ArrowLeft')) {
+            this.rectangle.x -= 5;
+            this.shape.x -= 5;
         }
     }
 
