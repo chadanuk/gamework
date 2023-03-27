@@ -337,6 +337,12 @@ export class GameObject {
         return (this.velocity.x === 0 && this.velocity.y === 0 || (this.controlledByKeyPad && this.keysDown.length === 0));
     }
 
+    getCollisionByType(collisionType) {
+        return this.currentCollisions.find((collision) => {
+            return collision.type === collisionType;
+        });
+    }
+
     detectCollisions(object) {
         if(this.hasNoVelocity() && object.hasNoVelocity()) {
             return;
@@ -380,7 +386,7 @@ export class GameObject {
     
     collisionExists(collisionType) {
         return this.currentCollisions.findIndex((collision) => {
-            return collision.type === collisionType;
+            return collision !== undefined && collision.type === collisionType;
         }) > -1;
     }
     
