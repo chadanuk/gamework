@@ -53,6 +53,10 @@ export class Scene {
         return this;
     }
 
+    findObjectByName(name) {
+        return this.objects.find(o => o.name === name);
+    }
+
     removeObjectsWithNameContaining(stringPartial) {
         this.objects.forEach((object, objectIndex) => {
             if(object.name.includes(stringPartial)) {

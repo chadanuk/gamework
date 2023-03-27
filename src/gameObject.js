@@ -157,6 +157,10 @@ export class GameObject {
         }
     }
 
+    getPosition() {
+        return {x: this.shape.x, y: this.shape.y};
+    }
+
     calculatePosition() {
         if(this.paused) {
             return;
