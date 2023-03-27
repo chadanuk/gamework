@@ -15,5 +15,8 @@
     "bugs": {
         "url": "https://github.com/chadanuk/gamework/issues"
     },
-    "homepage": "https://github.com/chadanuk/gamework#readme"
+    "homepage": "https://github.com/chadanuk/gamework#readme",
+    "devDependencies": {
+        "typescript": "^5.0.2"
+    }
 }
