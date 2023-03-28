@@ -26,6 +26,25 @@ export class GameObject {
         this.rectangle = rectangle;
         this.shape = this.rectangle;
         
+        // Set defaults for typing
+        this.velocity =  new Vector(0, 0);
+        this.acceleration =  new Vector(0, 0);
+        this.currentAngle =  0;
+        this.rotation =  0;
+        this.friction =  null;
+        this.maxSpeed =  6;
+        this.ignoreCollisions =  false;
+        this.paused =  false;
+        this.deleted =  false;
+        this.shouldConstrainToCanvasBounds =  false;
+        this.onPositionChange =  () => {};
+        this.onCollision =  () => {};
+        this.controlledByKeyPad =  false;
+        this.accelerateInDirectionOfTravelOnly =  false;
+        this.drawTrace =  false;
+        this.showHitBox =  false;
+
+
         Object.keys(options).forEach((property) => {
             this[property] = options[property];
         });

@@ -29,6 +29,22 @@ var GameObject = /** @class */ (function () {
         this.scene = scene;
         this.rectangle = rectangle;
         this.shape = this.rectangle;
+        this.velocity = new vector_1.Vector(0, 0);
+        this.acceleration = new vector_1.Vector(0, 0);
+        this.currentAngle = 0;
+        this.rotation = 0;
+        this.friction = null;
+        this.maxSpeed = 6;
+        this.ignoreCollisions = false;
+        this.paused = false;
+        this.deleted = false;
+        this.shouldConstrainToCanvasBounds = false;
+        this.onPositionChange = function () { };
+        this.onCollision = function () { };
+        this.controlledByKeyPad = false;
+        this.accelerateInDirectionOfTravelOnly = false;
+        this.drawTrace = false;
+        this.showHitBox = false;
         Object.keys(options).forEach(function (property) {
             _this[property] = options[property];
         });
