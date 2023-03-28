@@ -10,6 +10,8 @@ const optionDefaults = {
     ignoreCollisions: false,
     paused: false,
     deleted: false,
+    outlineColour: 'red',
+    fillColour: null,
     shouldConstrainToCanvasBounds: false,
     onPositionChange: () => {},
     onCollision: () => {},
@@ -38,6 +40,8 @@ export class GameObject {
         this.paused =  false;
         this.deleted =  false;
         this.shouldConstrainToCanvasBounds =  false;
+        this.fillColour = null;
+        this.outlineColour = 'red';
         this.onPositionChange =  () => {};
         this.onCollision =  () => {};
         this.controlledByKeyPad =  false;
@@ -337,8 +341,13 @@ export class GameObject {
             return;
         }
         context.beginPath();
-        context.strokeStyle = 'red';
+        context.strokeStyle = this.outlineColour;
         context.strokeRect(this.rectangle.x, this.rectangle.y, this.rectangle.width, this.rectangle.height);
+        if(this.fillColour) {
+            context.fillStyle = this.fillColour;
+            context.fillRect(this.rectangle.x, this.rectangle.y, this.rectangle.width, this.rectangle.height);
+
+        }
         context.stroke();
     }
     
@@ -413,10 +422,6 @@ export class GameObject {
     }
 
     detectCollisions(object) {
-        if(this.hasNoVelocity() && object.hasNoVelocity()) {
-            return;
-        }
-
         if(object.ignoreCollisions) {
             return;
         }

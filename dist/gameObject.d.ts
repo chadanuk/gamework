@@ -15,6 +15,8 @@ export class GameObject {
     paused: boolean;
     deleted: boolean;
     shouldConstrainToCanvasBounds: boolean;
+    fillColour: any;
+    outlineColour: string;
     onPositionChange: () => void;
     onCollision: () => void;
     controlledByKeyPad: boolean;

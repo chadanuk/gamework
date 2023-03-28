@@ -24,6 +24,8 @@ var optionDefaults = {
     ignoreCollisions: false,
     paused: false,
     deleted: false,
+    outlineColour: 'red',
+    fillColour: null,
     shouldConstrainToCanvasBounds: false,
     onPositionChange: function () { },
     onCollision: function () { },
@@ -52,6 +54,8 @@ var GameObject = /** @class */ (function () {
         this.paused = false;
         this.deleted = false;
         this.shouldConstrainToCanvasBounds = false;
+        this.fillColour = null;
+        this.outlineColour = 'red';
         this.onPositionChange = function () { };
         this.onCollision = function () { };
         this.controlledByKeyPad = false;
@@ -272,8 +276,12 @@ var GameObject = /** @class */ (function () {
             return;
         }
         context.beginPath();
-        context.strokeStyle = 'red';
+        context.strokeStyle = this.outlineColour;
         context.strokeRect(this.rectangle.x, this.rectangle.y, this.rectangle.width, this.rectangle.height);
+        if (this.fillColour) {
+            context.fillStyle = this.fillColour;
+            context.fillRect(this.rectangle.x, this.rectangle.y, this.rectangle.width, this.rectangle.height);
+        }
         context.stroke();
     };
     GameObject.prototype.drawTraceLine = function (context) {
@@ -335,9 +343,6 @@ var GameObject = /** @class */ (function () {
         });
     };
     GameObject.prototype.detectCollisions = function (object) {
-        if (this.hasNoVelocity() && object.hasNoVelocity()) {
-            return;
-        }
         if (object.ignoreCollisions) {
             return;
         }
