@@ -47,6 +47,10 @@ export class GameObject {
 
 
         Object.keys({...optionDefaults, ...options}).forEach((property) => {
+            if(options[property] === undefined) {
+                return;
+            }
+            
             this[property] = options[property];
         });
         

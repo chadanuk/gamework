@@ -59,6 +59,9 @@ var GameObject = /** @class */ (function () {
         this.drawTrace = false;
         this.showHitBox = false;
         Object.keys(__assign(__assign({}, optionDefaults), options)).forEach(function (property) {
+            if (options[property] === undefined) {
+                return;
+            }
             _this[property] = options[property];
         });
         if (this.scene) {
