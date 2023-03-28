@@ -3,6 +3,7 @@ import { Vector } from "./vector";
 const optionDefaults = {
     velocity: new Vector(0, 0), 
     acceleration: new Vector(0, 0), 
+    userControlledSpeed: 3,
     currentAngle: 0,
     rotation: 0,
     friction: null,
@@ -32,6 +33,7 @@ export class GameObject {
         // Set defaults for typing
         this.velocity =  new Vector(0, 0);
         this.acceleration =  new Vector(0, 0);
+        this.userControlledSpeed = 3;
         this.currentAngle =  0;
         this.rotation =  0;
         this.friction =  null;
@@ -173,23 +175,23 @@ export class GameObject {
 
     updatePositionBasedOnKeys(){
         if(this.keysDown.includes('ArrowUp') || this.keysDown.includes('w')) {
-            this.rectangle.y -= 5;
-            this.shape.y -= 5;
+            this.rectangle.y -= this.userControlledSpeed;
+            this.shape.y -= this.userControlledSpeed;
         }
 
         if(this.keysDown.includes('ArrowRight') || this.keysDown.includes('d')) {
-            this.rectangle.x += 5;
-            this.shape.x += 5;
+            this.rectangle.x += this.userControlledSpeed;
+            this.shape.x += this.userControlledSpeed;
         }
 
         if(this.keysDown.includes('ArrowDown') || this.keysDown.includes('s')) {
-            this.rectangle.y += 5;
-            this.shape.y += 5;
+            this.rectangle.y += this.userControlledSpeed;
+            this.shape.y += this.userControlledSpeed;
         }
         
         if(this.keysDown.includes('ArrowLeft') || this.keysDown.includes('a')) {
-            this.rectangle.x -= 5;
-            this.shape.x -= 5;
+            this.rectangle.x -= this.userControlledSpeed;
+            this.shape.x -= this.userControlledSpeed;
         }
     }
 
