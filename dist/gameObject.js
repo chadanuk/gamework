@@ -29,6 +29,7 @@ var GameObject = /** @class */ (function () {
         this.scene = scene;
         this.rectangle = rectangle;
         this.shape = this.rectangle;
+        // Set defaults for typing
         this.velocity = new vector_1.Vector(0, 0);
         this.acceleration = new vector_1.Vector(0, 0);
         this.currentAngle = 0;
