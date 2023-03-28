@@ -1,22 +1,5 @@
 export class GameObject {
-    constructor(scene: any, name: any, rectangle: any, options?: {
-        velocity: Vector;
-        acceleration: Vector;
-        currentAngle: number;
-        rotation: number;
-        friction: any;
-        maxSpeed: number;
-        ignoreCollisions: boolean;
-        paused: boolean;
-        deleted: boolean;
-        shouldConstrainToCanvasBounds: boolean;
-        onPositionChange: () => void;
-        onCollision: () => void;
-        controlledByKeyPad: boolean;
-        accelerateInDirectionOfTravelOnly: boolean;
-        drawTrace: boolean;
-        showHitBox: boolean;
-    });
+    constructor(scene: any, name: any, rectangle: any, options?: {});
     id: number;
     name: any;
     scene: any;

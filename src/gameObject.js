@@ -1,25 +1,26 @@
 import { Collision } from "./collision";
 import { Vector } from "./vector";
+const optionDefaults = {
+    velocity: new Vector(0, 0), 
+    acceleration: new Vector(0, 0), 
+    currentAngle: 0,
+    rotation: 0,
+    friction: null,
+    maxSpeed: 6,
+    ignoreCollisions: false,
+    paused: false,
+    deleted: false,
+    shouldConstrainToCanvasBounds: false,
+    onPositionChange: () => {},
+    onCollision: () => {},
+    controlledByKeyPad: false,
+    accelerateInDirectionOfTravelOnly: false,
+    drawTrace: false,
+    showHitBox: false,
+};
 
 export class GameObject {
-    constructor(scene, name, rectangle, options = {
-        velocity: new Vector(0, 0), 
-        acceleration: new Vector(0, 0), 
-        currentAngle: 0,
-        rotation: 0,
-        friction: null,
-        maxSpeed: 6,
-        ignoreCollisions: false,
-        paused: false,
-        deleted: false,
-        shouldConstrainToCanvasBounds: false,
-        onPositionChange: () => {},
-        onCollision: () => {},
-        controlledByKeyPad: false,
-        accelerateInDirectionOfTravelOnly: false,
-        drawTrace: false,
-        showHitBox: false,
-    }) {
+    constructor(scene, name, rectangle, options = {}) {
         this.id = Math.floor(new Date().getTime() * Math.random());
         this.name = name;
         this.scene = scene;
@@ -45,7 +46,7 @@ export class GameObject {
         this.showHitBox =  false;
 
 
-        Object.keys(options).forEach((property) => {
+        Object.keys({...optionDefaults, ...options}).forEach((property) => {
             this[property] = options[property];
         });
         

@@ -1,28 +1,40 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 exports.__esModule = true;
 exports.GameObject = void 0;
 var collision_1 = require("./collision");
 var vector_1 = require("./vector");
+var optionDefaults = {
+    velocity: new vector_1.Vector(0, 0),
+    acceleration: new vector_1.Vector(0, 0),
+    currentAngle: 0,
+    rotation: 0,
+    friction: null,
+    maxSpeed: 6,
+    ignoreCollisions: false,
+    paused: false,
+    deleted: false,
+    shouldConstrainToCanvasBounds: false,
+    onPositionChange: function () { },
+    onCollision: function () { },
+    controlledByKeyPad: false,
+    accelerateInDirectionOfTravelOnly: false,
+    drawTrace: false,
+    showHitBox: false
+};
 var GameObject = /** @class */ (function () {
     function GameObject(scene, name, rectangle, options) {
-        if (options === void 0) { options = {
-            velocity: new vector_1.Vector(0, 0),
-            acceleration: new vector_1.Vector(0, 0),
-            currentAngle: 0,
-            rotation: 0,
-            friction: null,
-            maxSpeed: 6,
-            ignoreCollisions: false,
-            paused: false,
-            deleted: false,
-            shouldConstrainToCanvasBounds: false,
-            onPositionChange: function () { },
-            onCollision: function () { },
-            controlledByKeyPad: false,
-            accelerateInDirectionOfTravelOnly: false,
-            drawTrace: false,
-            showHitBox: false
-        }; }
+        if (options === void 0) { options = {}; }
         var _this = this;
         this.id = Math.floor(new Date().getTime() * Math.random());
         this.name = name;
@@ -46,7 +58,7 @@ var GameObject = /** @class */ (function () {
         this.accelerateInDirectionOfTravelOnly = false;
         this.drawTrace = false;
         this.showHitBox = false;
-        Object.keys(options).forEach(function (property) {
+        Object.keys(__assign(__assign({}, optionDefaults), options)).forEach(function (property) {
             _this[property] = options[property];
         });
         if (this.scene) {
