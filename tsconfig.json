@@ -9,11 +9,10 @@
     "declaration": true,
     // This compiler run should
     // only output d.ts files
-    "emitDeclarationOnly": true,
+    "emitDeclarationOnly": false,
     // go to js file when using IDE functions like
     // "Go to Definition" in VSCode
     "declarationMap": true,
-    "outDir": "dist",
-    "outFile": "dist/index.js"
+    "outDir": "dist"
   }
 }
