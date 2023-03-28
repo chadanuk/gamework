@@ -5,7 +5,7 @@ import { Rectangle } from "./rectangle";
 
 export class CircleGameObject extends GameObject {
     constructor(scene, name, circle, velocity, rotation = 0) {
-        super(scene, name, new Rectangle(circle.x - circle.radius, circle.y - circle.radius, circle.radius * 2, circle.radius * 2), velocity, rotation);
+        super(scene, name, new Rectangle(circle.x - circle.radius, circle.y - circle.radius, circle.radius * 2, circle.radius * 2), {velocity, rotation});
         
         this.circle = circle;
         this.shape = this.circle;

@@ -2,37 +2,45 @@ import { Collision } from "./collision";
 import { Vector } from "./vector";
 
 export class GameObject {
-    constructor(scene, name, rectangle, velocity = new Vector(0, 0), rotation = 0) {
+    constructor(scene, name, rectangle, options = {
+        velocity: new Vector(0, 0), 
+        acceleration: new Vector(0, 0), 
+        currentAngle: 0,
+        rotation: 0,
+        friction: null,
+        maxSpeed: 6,
+        ignoreCollisions: false,
+        paused: false,
+        deleted: false,
+        shouldConstrainToCanvasBounds: false,
+        onPositionChange: () => {},
+        onCollision: () => {},
+        controlledByKeyPad: false,
+        accelerateInDirectionOfTravelOnly: false,
+        drawTrace: false,
+        showHitBox: false,
+    }) {
         this.id = Math.floor(new Date().getTime() * Math.random());
         this.name = name;
         this.scene = scene;
         this.rectangle = rectangle;
         this.shape = this.rectangle;
-        this.velocity = velocity;
-        this.rotation = rotation;
-        this.paused = false;
-        this.deleted = false;
-        this.currentAngle = 0;
-        this.currentCollisions = [];
+        
+        Object.keys(options).forEach((property) => {
+            this[property] = options[property];
+        });
+        
         if(this.scene) {
             this.scene.addObject(this);
         }
-        this.friction = null;
-        this.acceleration = new Vector(0, 0);
-        this.maxSpeed = 6;
-        this.ignoreCollisions = false;
-        this.onPositionChange = () => {};
-        this.onCollision = (collisions) => {};
-        this.asset = null;
+        
         this.sprite = null;
-        this.showHitBox = false;
-        this.controlledByKeyPad = false;
+        this.asset = null;
+        
+        this.currentCollisions = [];
         this.keysDown = [];
-
-        this.accelerateInDirectionOfTravelOnly = false;
-        this.drawTrace = false;
-        this.trace = [];
         this.sounds = [];
+        this.trace = [];
     }
 
     pause() {
@@ -161,6 +169,38 @@ export class GameObject {
         return {x: this.shape.x, y: this.shape.y};
     }
 
+    constrainToCanvasBounds() {
+        if(!this.shouldConstrainToCanvasBounds) {
+            return;
+        }
+
+        const pos = this.getPosition();
+        if(this.rectangle.x + this.rectangle.width < 0)  {
+            pos.x = 0;
+            this.velocity.x *= -1;
+        }
+        if(
+            (this.rectangle.x - this.rectangle.width > this.scene.game.canvas.width)
+            ) {
+            pos.x = this.scene.game.canvas.width;
+            
+            this.velocity.x *= -1;
+            
+        }
+
+        if(this.rectangle.y + this.rectangle.height< 0) {
+            pos.y = 0;
+            this.velocity.y *= -1;
+        } 
+        
+        if(this.rectangle.y - this.rectangle.height > this.scene.game.canvas.height)
+        {
+            pos.y = this.scene.game.canvas.height;
+            this.velocity.y *= -1;
+        }
+        this.setPosition(pos);
+    }
+
     calculatePosition() {
         if(this.paused) {
             return;
@@ -169,6 +209,7 @@ export class GameObject {
         if(this.controlledByKeyPad) {
             return this.updatePositionBasedOnKeys();
         }
+        this.constrainToCanvasBounds();
         this.updateVelocity();
         
         this.rectangle.x += this.velocity.x;
