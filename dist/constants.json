@@ -1,0 +1,31 @@
+{
+    "WALL_DEPTH": 20,
+    "COLOURS": {
+        "modalBorderColour": "#000000",
+        "modalBackgroundColour": "rgba(150,150, 200, 0.98)",
+        "modalTextColour": "rgba(255,255, 200, 0.8)",
+        "textColour": "rgba(200,100, 200, 0.8)"
+    },
+    "POPUP": {
+        "padding": 40,
+        "fontSize": "20px",
+        "fontType": "sans-serif",
+        "textColour": "#FFFFFF"
+    },
+    "BUTTONS": {
+        "textColour": "#FFFFFF",
+        "borderColour": "rgba(200,155,255,0.5)",
+        "backgroundColour": "rgba(70,70,70,0.5)",
+        "hoverBorderColour": "rgba(200, 155, 255, 0.5)",
+        "hoverBackgroundColour": "rgba(100, 100, 100, 0.8)",
+        "activeBorderColour": "rgba(200, 155, 255, 0.5)",
+        "activeBackgroundColour": "rgba(140, 140, 140,0.9)",
+        "padding": 8,
+        "minWidth": 200,
+        "minHeight": 40,
+        "spacing": 20,
+        "fontSize": "16px",
+        "fontType": "sans-serif"
+    },
+    "ASSETS": []
+}
