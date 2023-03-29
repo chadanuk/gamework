@@ -74,9 +74,12 @@ var CircleGameObject = /** @class */ (function (_super) {
         this.detectCollisionsWithRectangle(object);
     };
     CircleGameObject.prototype.drawHitBox = function (context) {
-        context.strokeStyle = 'gray';
+        context.strokeStyle = this.outlineColour;
         context.beginPath();
         context.arc(this.circle.x, this.circle.y, this.circle.radius, 0, 2 * Math.PI);
+        if (this.fillColour) {
+            context.fill();
+        }
         context.stroke();
     };
     return CircleGameObject;

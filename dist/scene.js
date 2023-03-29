@@ -23,10 +23,14 @@ var Scene = /** @class */ (function () {
         this.game = game;
         this.hidden = false;
         this.deleted = false;
+        this.camera = null;
         if (this.game) {
             this.game.addScene(this);
         }
     }
+    Scene.prototype.setCamera = function (camera) {
+        this.camera = camera;
+    };
     Scene.prototype.remove = function () {
         this.deleted = true;
         this.clearObjects();
@@ -166,6 +170,9 @@ var Scene = /** @class */ (function () {
             }
             object.draw(context);
         });
+        if (this.camera) {
+            this.camera.update(context);
+        }
     };
     return Scene;
 }());

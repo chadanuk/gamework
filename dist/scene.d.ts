@@ -9,6 +9,8 @@ export class Scene {
     game: any;
     hidden: boolean;
     deleted: boolean;
+    camera: any;
+    setCamera(camera: any): void;
     remove(): void;
     setGame(game: any): Scene;
     setShowHitBoxes(show: any): Scene;

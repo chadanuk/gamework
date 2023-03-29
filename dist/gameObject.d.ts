@@ -7,6 +7,7 @@ export class GameObject {
     shape: any;
     velocity: Vector;
     acceleration: Vector;
+    userControlledSpeed: number;
     currentAngle: number;
     rotation: number;
     friction: any;

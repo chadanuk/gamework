@@ -9,10 +9,14 @@ export class Scene {
         this.game = game;
         this.hidden = false;
         this.deleted = false;
-            
+        this.camera = null;
         if(this.game){
             this.game.addScene(this);
         }
+    }
+
+    setCamera(camera) {
+        this.camera = camera;
     }
 
     remove() {
@@ -183,5 +187,9 @@ export class Scene {
 
             object.draw(context);
         });
+
+        if(this.camera) {
+            this.camera.update(context);
+        }
     }
 }

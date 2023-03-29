@@ -17,6 +17,7 @@ var vector_1 = require("./vector");
 var optionDefaults = {
     velocity: new vector_1.Vector(0, 0),
     acceleration: new vector_1.Vector(0, 0),
+    userControlledSpeed: 3,
     currentAngle: 0,
     rotation: 0,
     friction: null,
@@ -46,6 +47,7 @@ var GameObject = /** @class */ (function () {
         // Set defaults for typing
         this.velocity = new vector_1.Vector(0, 0);
         this.acceleration = new vector_1.Vector(0, 0);
+        this.userControlledSpeed = 3;
         this.currentAngle = 0;
         this.rotation = 0;
         this.friction = null;
@@ -155,20 +157,20 @@ var GameObject = /** @class */ (function () {
     };
     GameObject.prototype.updatePositionBasedOnKeys = function () {
         if (this.keysDown.includes('ArrowUp') || this.keysDown.includes('w')) {
-            this.rectangle.y -= 5;
-            this.shape.y -= 5;
+            this.rectangle.y -= this.userControlledSpeed;
+            this.shape.y -= this.userControlledSpeed;
         }
         if (this.keysDown.includes('ArrowRight') || this.keysDown.includes('d')) {
-            this.rectangle.x += 5;
-            this.shape.x += 5;
+            this.rectangle.x += this.userControlledSpeed;
+            this.shape.x += this.userControlledSpeed;
         }
         if (this.keysDown.includes('ArrowDown') || this.keysDown.includes('s')) {
-            this.rectangle.y += 5;
-            this.shape.y += 5;
+            this.rectangle.y += this.userControlledSpeed;
+            this.shape.y += this.userControlledSpeed;
         }
         if (this.keysDown.includes('ArrowLeft') || this.keysDown.includes('a')) {
-            this.rectangle.x -= 5;
-            this.shape.x -= 5;
+            this.rectangle.x -= this.userControlledSpeed;
+            this.shape.x -= this.userControlledSpeed;
         }
     };
     GameObject.prototype.getPosition = function () {
