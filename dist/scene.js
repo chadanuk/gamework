@@ -155,6 +155,14 @@ var Scene = /** @class */ (function () {
         if (this.deleted || this.hidden) {
             return;
         }
+        if (this.camera) {
+            this.camera.update();
+            //  Save context pre-clip
+            context.save();
+            context.beginPath();
+            context.rect(camera.viewPort.x, camera.viewPort.y, camera.viewPort.width, camera.viewPort.height);
+            context.clip();
+        }
         this.objects.forEach(function (object) {
             _this.objects.forEach(function (potentialCollisionObject) {
                 if (potentialCollisionObject.id === object.id) {
@@ -168,11 +176,13 @@ var Scene = /** @class */ (function () {
                 object.setShowHitBox(true);
                 object.drawHitBox(context);
             }
-            object.draw(context);
+            var drawObject = object;
+            if (_this.camera) {
+                drawObject = _this.camera.transformObject(object);
+                ;
+            }
+            drawObject.draw(context);
         });
-        if (this.camera) {
-            this.camera.update(context);
-        }
     };
     return Scene;
 }());

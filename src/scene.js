@@ -167,6 +167,15 @@ export class Scene {
         if(this.deleted || this.hidden) {
             return;
         }
+        
+        if(this.camera) {
+            this.camera.update(context);
+            //  Save context pre-clip
+            context.save();
+            context.beginPath();
+            context.rect(this.camera.viewPort.x, this.camera.viewPort.y, this.camera.viewPort.width, this.camera.viewPort.height);
+            context.clip();
+        }
 
         this.objects.forEach((object) => {
             this.objects.forEach((potentialCollisionObject) => {
@@ -184,12 +193,14 @@ export class Scene {
                 object.setShowHitBox(true);
                 object.drawHitBox(context);
             }
+            
+            let drawObject = object;
 
-            object.draw(context);
+            if(this.camera) {
+                drawObject = this.camera.transformObject(object);
+            }
+            
+            drawObject.draw(context);
         });
-
-        if(this.camera) {
-            this.camera.update(context);
-        }
     }
 }
