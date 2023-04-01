@@ -11,10 +11,7 @@ export class CircleGameObject extends GameObject {
         this.shape = this.circle;
     }
     
-    detectCollisionsWithOtherCircle(object) {
-        // ToDO detect circles colliding
-    }
-
+    
     setPosition(position) {
         this.rectangle.x = position.x - this.circle.radius;
         this.rectangle.y = position.y - this.circle.radius;
@@ -22,6 +19,13 @@ export class CircleGameObject extends GameObject {
         this.shape.y = position.y;
         this.circle.x = position.x;
         this.circle.y = position.y;
+        
+        return this;
+    }
+    
+ 
+    detectCollisionsWithOtherCircle(object) {
+        // ToDO detect circles colliding
     }
 
     detectCollisionsWithRectangle(object) {
@@ -67,10 +71,11 @@ export class CircleGameObject extends GameObject {
     drawHitBox(context) {
         context.strokeStyle = this.outlineColour;
         context.beginPath();
-        context.arc(this.circle.x, this.circle.y, this.circle.radius, 0, 2 * Math.PI);
+        context.arc(this.screenDrawObject.x, this.screenDrawObject.y, this.screenDrawObject.radius, 0, 2 * Math.PI);
         if(this.fillColour) {
+            context.fillStyle = this.outlineColour;
             context.fill();
         }
-        context.stroke();
+        context.stroke();   
     }
 }

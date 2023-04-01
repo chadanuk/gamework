@@ -29,6 +29,7 @@ export class GameObject {
         this.scene = scene;
         this.rectangle = rectangle;
         this.shape = this.rectangle;
+        this.screenDrawObject = this.rectangle;
         
         // Set defaults for typing
         this.velocity =  new Vector(0, 0);
@@ -171,27 +172,26 @@ export class GameObject {
         this.rectangle.y = position.y;
         this.shape.x = position.x;
         this.shape.y = position.y;
+
+        return this;
     }
 
     updatePositionBasedOnKeys(){
+        this.velocity = new Vector(0, 0);
         if(this.keysDown.includes('ArrowUp') || this.keysDown.includes('w')) {
-            this.rectangle.y -= this.userControlledSpeed;
-            this.shape.y -= this.userControlledSpeed;
+            this.velocity.y = -this.userControlledSpeed;
         }
 
         if(this.keysDown.includes('ArrowRight') || this.keysDown.includes('d')) {
-            this.rectangle.x += this.userControlledSpeed;
-            this.shape.x += this.userControlledSpeed;
+            this.velocity.x = this.userControlledSpeed;
         }
 
         if(this.keysDown.includes('ArrowDown') || this.keysDown.includes('s')) {
-            this.rectangle.y += this.userControlledSpeed;
-            this.shape.y += this.userControlledSpeed;
+            this.velocity.y = this.userControlledSpeed;
         }
         
         if(this.keysDown.includes('ArrowLeft') || this.keysDown.includes('a')) {
-            this.rectangle.x -= this.userControlledSpeed;
-            this.shape.x -= this.userControlledSpeed;
+            this.velocity.x = -this.userControlledSpeed;
         }
     }
 
@@ -199,7 +199,7 @@ export class GameObject {
         return {x: this.shape.x, y: this.shape.y};
     }
 
-    constrainToCanvasBounds() {
+    constrainObjectToCanvasBounds() {
         if(!this.shouldConstrainToCanvasBounds) {
             return;
         }
@@ -235,12 +235,14 @@ export class GameObject {
         if(this.paused) {
             return;
         }
-
-        if(this.controlledByKeyPad) {
-            return this.updatePositionBasedOnKeys();
-        }
-        this.constrainToCanvasBounds();
+        
+        
+        this.constrainObjectToCanvasBounds();
         this.updateVelocity();
+        
+        if(this.controlledByKeyPad) {
+            this.updatePositionBasedOnKeys();
+        }
         
         this.rectangle.x += this.velocity.x;
         this.rectangle.y += this.velocity.y;
@@ -344,10 +346,10 @@ export class GameObject {
         }
         context.beginPath();
         context.strokeStyle = this.outlineColour;
-        context.strokeRect(this.rectangle.x, this.rectangle.y, this.rectangle.width, this.rectangle.height);
+        context.strokeRect(this.screenDrawObject.x, this.screenDrawObject.y, this.screenDrawObject.width, this.screenDrawObject.height);
         if(this.fillColour) {
             context.fillStyle = this.fillColour;
-            context.fillRect(this.rectangle.x, this.rectangle.y, this.rectangle.width, this.rectangle.height);
+            context.fillRect(this.screenDrawObject.x, this.screenDrawObject.y, this.screenDrawObject.width, this.screenDrawObject.height);
 
         }
         context.stroke();
@@ -385,6 +387,16 @@ export class GameObject {
         //Rotate the canvas around the origin
         context.rotate(rad);
         context.translate(-translateX, -translateY);
+    }
+
+    setScreenDrawObject(shape) {
+        this.screenDrawObject = shape;
+
+        return this;
+    }
+
+    getDrawObjectPosition() {
+        return {x: this.screenDrawObject.x, y: this.screenDrawObject.y};
     }
 
     draw(context) {

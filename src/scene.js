@@ -17,6 +17,8 @@ export class Scene {
 
     setCamera(camera) {
         this.camera = camera;
+
+        return this;
     }
 
     remove() {
@@ -194,10 +196,10 @@ export class Scene {
                 object.drawHitBox(context);
             }
             
-            let drawObject = object;
+            let drawObject = {...object};
 
             if(this.camera) {
-                drawObject = this.camera.transformObject(object);
+                drawObject = this.camera.transformObject(object);   
             }
             
             drawObject.draw(context);
