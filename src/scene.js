@@ -171,12 +171,8 @@ export class Scene {
         }
         
         if(this.camera) {
-            this.camera.update(context);
-            //  Save context pre-clip
-            context.save();
-            context.beginPath();
-            context.rect(this.camera.viewPort.x, this.camera.viewPort.y, this.camera.viewPort.width, this.camera.viewPort.height);
-            context.clip();
+            // context.translate(-x, -y);
+            this.camera.preDraw(context);
         }
 
         this.objects.forEach((object) => {
@@ -196,13 +192,11 @@ export class Scene {
                 object.drawHitBox(context);
             }
             
-            let drawObject = {...object};
-
-            if(this.camera) {
-                drawObject = this.camera.transformObject(object);   
-            }
-            
-            drawObject.draw(context);
+            object.draw(context);
         });
+
+        if(this.camera) {
+            this.camera.postDraw(context);
+        }
     }
 }

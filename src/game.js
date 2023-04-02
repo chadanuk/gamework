@@ -65,6 +65,7 @@ export class Game {
     }
 
     handleKeyDown(event) {
+        event.preventDefault();
         this.keysDown.push(event.key);
         this.keysDown = [...new Set(this.keysDown)];
         
@@ -74,6 +75,7 @@ export class Game {
     }
 
     handleKeyUp(event) {
+        event.preventDefault();
         this.keysDown = this.keysDown.filter((keyDown) => {
             return keyDown !== event.key;
         });
