@@ -1,6 +1,3 @@
-import { Sprite } from "./sprite";
-
-
 export class TileMap {
     constructor(scene, tileMap, tileset = null) {
         this.scene = scene;
