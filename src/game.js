@@ -18,7 +18,19 @@ export class Game {
         this.addEventListeners();
 
         this.keysDown = [];
-
+        this.keysToListenFor = [
+            'ArrowUp',
+            'w',
+            'ArrowRight',
+            'd',
+            'ArrowDown',
+            's',
+            'ArrowLeft',
+            'a',
+            ' ',
+            'shift',
+            'control'
+        ];
         this.constants = baseConstants;
         window.gamework = this;
     }
@@ -65,7 +77,11 @@ export class Game {
     }
 
     handleKeyDown(event) {
+        if(!this.keysToListenFor.includes(event.key)) {
+            return;
+        }
         event.preventDefault();
+
         this.keysDown.push(event.key);
         this.keysDown = [...new Set(this.keysDown)];
         
