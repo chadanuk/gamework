@@ -73,9 +73,11 @@ export class CircleGameObject extends GameObject {
         context.beginPath();
         context.arc(this.screenDrawObject.x, this.screenDrawObject.y, this.screenDrawObject.radius, 0, 2 * Math.PI);
         if(this.fillColour) {
-            context.fillStyle = this.outlineColour;
+            context.fillStyle = this.fillColour;
             context.fill();
+        } else {
+            context.stroke();   
         }
-        context.stroke();   
+        context.closePath();
     }
 }
