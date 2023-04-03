@@ -99,13 +99,8 @@ export class Camera {
         const dx = object.rectangle.x - this.viewPort.width / 2;
         const dy = object.rectangle.y - this.viewPort.height / 2;
         
-            this.scrollPosition.x = dx;
-            this.scrollPosition.y = dy;
-        
-        if(!this.scrolling && (Math.abs(dx) > 0 || Math.abs(dy) > 0)) {
-            console.log('Scrolll', {dx,dy});
-            // this.startScroll();
-        }
+        this.scrollPosition.x = dx;
+        this.scrollPosition.y = dy;
     }
 
     preDraw(context) {
