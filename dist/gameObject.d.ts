@@ -5,6 +5,7 @@ export class GameObject {
     scene: any;
     rectangle: any;
     shape: any;
+    screenDrawObject: any;
     velocity: Vector;
     acceleration: Vector;
     userControlledSpeed: number;
@@ -47,13 +48,13 @@ export class GameObject {
         y: any;
     }): void;
     remove(): void;
-    setPosition(position: any): void;
+    setPosition(position: any): GameObject;
     updatePositionBasedOnKeys(): void;
     getPosition(): {
         x: any;
         y: any;
     };
-    constrainToCanvasBounds(): void;
+    constrainObjectToCanvasBounds(): void;
     calculatePosition(): void;
     handleKeysDown(keysDown: any): void;
     handleKeyUp(keysDown: any, keyUp: any): void;
@@ -69,6 +70,11 @@ export class GameObject {
     drawHitBox(context: any): void;
     drawTraceLine(context: any): void;
     drawRotated(context: any): void;
+    setScreenDrawObject(shape: any): GameObject;
+    getDrawObjectPosition(): {
+        x: any;
+        y: any;
+    };
     draw(context: any): void;
     hasNoVelocity(): boolean;
     getCollisionByType(collisionType: any): any;

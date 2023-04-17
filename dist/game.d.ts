@@ -12,6 +12,7 @@ export class Game {
         y: any;
     };
     keysDown: any[];
+    keysToListenFor: string[];
     constants: any;
     setConstants(constants: any): Game;
     pause(): void;

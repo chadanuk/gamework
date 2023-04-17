@@ -28,9 +28,6 @@ var CircleGameObject = /** @class */ (function (_super) {
         _this.shape = _this.circle;
         return _this;
     }
-    CircleGameObject.prototype.detectCollisionsWithOtherCircle = function (object) {
-        // ToDO detect circles colliding
-    };
     CircleGameObject.prototype.setPosition = function (position) {
         this.rectangle.x = position.x - this.circle.radius;
         this.rectangle.y = position.y - this.circle.radius;
@@ -38,6 +35,10 @@ var CircleGameObject = /** @class */ (function (_super) {
         this.shape.y = position.y;
         this.circle.x = position.x;
         this.circle.y = position.y;
+        return this;
+    };
+    CircleGameObject.prototype.detectCollisionsWithOtherCircle = function (object) {
+        // ToDO detect circles colliding
     };
     CircleGameObject.prototype.detectCollisionsWithRectangle = function (object) {
         if (object.ignoreCollisions) {
@@ -76,11 +77,15 @@ var CircleGameObject = /** @class */ (function (_super) {
     CircleGameObject.prototype.drawHitBox = function (context) {
         context.strokeStyle = this.outlineColour;
         context.beginPath();
-        context.arc(this.circle.x, this.circle.y, this.circle.radius, 0, 2 * Math.PI);
+        context.arc(this.screenDrawObject.x, this.screenDrawObject.y, this.screenDrawObject.radius, 0, 2 * Math.PI);
         if (this.fillColour) {
+            context.fillStyle = this.fillColour;
             context.fill();
         }
-        context.stroke();
+        else {
+            context.stroke();
+        }
+        context.closePath();
     };
     return CircleGameObject;
 }(gameObject_1.GameObject));

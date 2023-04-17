@@ -6,6 +6,7 @@ export class Button extends GameObject {
     strokeStyle: any;
     fillStyle: any;
     active: boolean;
+    setPosition(position: any): void;
     setWidth(width: any): void;
     handlePointerStart(position: any): void;
     handlePointerHoverLeave(position: any): void;

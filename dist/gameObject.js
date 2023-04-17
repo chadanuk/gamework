@@ -44,6 +44,7 @@ var GameObject = /** @class */ (function () {
         this.scene = scene;
         this.rectangle = rectangle;
         this.shape = this.rectangle;
+        this.screenDrawObject = this.rectangle;
         // Set defaults for typing
         this.velocity = new vector_1.Vector(0, 0);
         this.acceleration = new vector_1.Vector(0, 0);
@@ -154,29 +155,27 @@ var GameObject = /** @class */ (function () {
         this.rectangle.y = position.y;
         this.shape.x = position.x;
         this.shape.y = position.y;
+        return this;
     };
     GameObject.prototype.updatePositionBasedOnKeys = function () {
+        this.velocity = new vector_1.Vector(0, 0);
         if (this.keysDown.includes('ArrowUp') || this.keysDown.includes('w')) {
-            this.rectangle.y -= this.userControlledSpeed;
-            this.shape.y -= this.userControlledSpeed;
+            this.velocity.y = -this.userControlledSpeed;
         }
         if (this.keysDown.includes('ArrowRight') || this.keysDown.includes('d')) {
-            this.rectangle.x += this.userControlledSpeed;
-            this.shape.x += this.userControlledSpeed;
+            this.velocity.x = this.userControlledSpeed;
         }
         if (this.keysDown.includes('ArrowDown') || this.keysDown.includes('s')) {
-            this.rectangle.y += this.userControlledSpeed;
-            this.shape.y += this.userControlledSpeed;
+            this.velocity.y = this.userControlledSpeed;
         }
         if (this.keysDown.includes('ArrowLeft') || this.keysDown.includes('a')) {
-            this.rectangle.x -= this.userControlledSpeed;
-            this.shape.x -= this.userControlledSpeed;
+            this.velocity.x = -this.userControlledSpeed;
         }
     };
     GameObject.prototype.getPosition = function () {
         return { x: this.shape.x, y: this.shape.y };
     };
-    GameObject.prototype.constrainToCanvasBounds = function () {
+    GameObject.prototype.constrainObjectToCanvasBounds = function () {
         if (!this.shouldConstrainToCanvasBounds) {
             return;
         }
@@ -203,11 +202,11 @@ var GameObject = /** @class */ (function () {
         if (this.paused) {
             return;
         }
-        if (this.controlledByKeyPad) {
-            return this.updatePositionBasedOnKeys();
-        }
-        this.constrainToCanvasBounds();
+        this.constrainObjectToCanvasBounds();
         this.updateVelocity();
+        if (this.controlledByKeyPad) {
+            this.updatePositionBasedOnKeys();
+        }
         this.rectangle.x += this.velocity.x;
         this.rectangle.y += this.velocity.y;
         this.shape.x += this.velocity.x;
@@ -279,10 +278,10 @@ var GameObject = /** @class */ (function () {
         }
         context.beginPath();
         context.strokeStyle = this.outlineColour;
-        context.strokeRect(this.rectangle.x, this.rectangle.y, this.rectangle.width, this.rectangle.height);
+        context.strokeRect(this.screenDrawObject.x, this.screenDrawObject.y, this.screenDrawObject.width, this.screenDrawObject.height);
         if (this.fillColour) {
             context.fillStyle = this.fillColour;
-            context.fillRect(this.rectangle.x, this.rectangle.y, this.rectangle.width, this.rectangle.height);
+            context.fillRect(this.screenDrawObject.x, this.screenDrawObject.y, this.screenDrawObject.width, this.screenDrawObject.height);
         }
         context.stroke();
     };
@@ -313,6 +312,13 @@ var GameObject = /** @class */ (function () {
         //Rotate the canvas around the origin
         context.rotate(rad);
         context.translate(-translateX, -translateY);
+    };
+    GameObject.prototype.setScreenDrawObject = function (shape) {
+        this.screenDrawObject = shape;
+        return this;
+    };
+    GameObject.prototype.getDrawObjectPosition = function () {
+        return { x: this.screenDrawObject.x, y: this.screenDrawObject.y };
     };
     GameObject.prototype.draw = function (context) {
         if (this.deleted) {

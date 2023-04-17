@@ -38,6 +38,19 @@ var Game = /** @class */ (function () {
         this.initialiseContext();
         this.addEventListeners();
         this.keysDown = [];
+        this.keysToListenFor = [
+            'ArrowUp',
+            'w',
+            'ArrowRight',
+            'd',
+            'ArrowDown',
+            's',
+            'ArrowLeft',
+            'a',
+            ' ',
+            'shift',
+            'control'
+        ];
         this.constants = constants_json_1["default"];
         window.gamework = this;
     }
@@ -74,6 +87,10 @@ var Game = /** @class */ (function () {
     };
     Game.prototype.handleKeyDown = function (event) {
         var _this = this;
+        if (!this.keysToListenFor.includes(event.key)) {
+            return;
+        }
+        event.preventDefault();
         this.keysDown.push(event.key);
         this.keysDown = __spreadArray([], new Set(this.keysDown), true);
         this.scenes.forEach(function (scene) {
@@ -82,6 +99,7 @@ var Game = /** @class */ (function () {
     };
     Game.prototype.handleKeyUp = function (event) {
         var _this = this;
+        event.preventDefault();
         this.keysDown = this.keysDown.filter(function (keyDown) {
             return keyDown !== event.key;
         });

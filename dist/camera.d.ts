@@ -1,24 +1,29 @@
 export class Camera {
-    constructor(name: any, viewPort: any, scene?: any);
+    constructor(name: any, viewPort: any, scene: any);
     id: string;
     name: any;
     viewPort: any;
     following: any[];
-    currentPosition: Vector;
-    velocity: Vector;
+    scrollPosition: Vector;
+    currentScrollPosition: Vector;
+    currentScrollPositionChange: Vector;
     scene: any;
     padding: number;
-    friction: number;
-    panSpeed: number;
     zoom: number;
+    scrolling: boolean;
+    effectDuration: number;
+    positionChangeRequired: Vector;
+    updateViewPortbasedOnCavasSize(): void;
     setPadding(padding: any): Camera;
-    setPanSpeed(speed: any): Camera;
-    calculateVelocity(): void;
     followObject(object: any, padding?: number): void;
     followObjects(objects: any, padding?: number): void;
+    easeLinear(time: any, currentValue: any, endValue: any, duration: any): any;
+    easeScroll(): void;
+    frame: number;
+    startScroll(): void;
     calculatePosition(): void;
-    updateViewPortPosition(position: any): void;
-    transformObject(object: any): any;
+    preDraw(context: any): void;
+    postDraw(context: any): void;
 }
 import { Vector } from "./vector";
 //# sourceMappingURL=camera.d.ts.map
