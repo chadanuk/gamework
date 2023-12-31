@@ -1,61 +1,202 @@
-export class TileMap {
-    constructor(scene, tileMap, tileset = null) {
-        this.scene = scene;
-        this.tileMap = {
-            cols: 8,
-            rows: 8,
-            tsize: 32,
-            tiles: [
-              
-            ],
-            ...tileMap,
-        };
-
-        this.image = new Image();
-        this.isLoaded = null;
-        this.load();
-        this.tileset = tileset;
-
-        window.gamework.constants.ASSETS.push(this);
-        this.scene.addObject(this);
-    }
-
-    setScene(scene) {
-        this.scene = scene;
-    }
-
-    load() {
-        this.image.onload = () => {
-            this.loaded = true;
+export class Scene {
+    constructor(name = null, game = null) {
+        this.id = `scene.${Math.floor(new Date().getTime() * Math.random())}`;
+        this.objects = [];
+        this.objectsSelected = [];
+        this.objectsHoveredOver = [];
+        this.showHitBoxes = false;
+        this.name = name || this.id;
+        this.game = game;
+        this.hidden = false;
+        this.deleted = false;
+        this.camera = null;
+        if(this.game){
+            this.game.addScene(this);
         }
-        
-        this.image.src = this.tileset;
     }
 
-    getTile(col, row) {
-        return this.tileMap.tiles[row * map.cols + col];
+    setCamera(camera) {
+        this.camera = camera;
+
+        return this;
+    }
+
+    remove() {
+        this.deleted = true;
+        this.clearObjects();
+        this.game = null;
+    }
+
+    setGame(game) {
+        this.game = game;
+        return this;
+    }
+
+    setShowHitBoxes(show) {
+        this.showHitBoxes = show;
+        return this;
+    }
+
+    addObject(object) {
+        let foundObjectIndex = this.findObjectIndex(object);
+        if(foundObjectIndex) {
+            this.objects[foundObjectIndex] = object;
+            console.warn(`object "${object.name}" already exists, updating`);
+            return;
+        }
+
+        object.setScene(this);
+        this.objects.push(object);
+        return this;
+    }
+
+    clearObjects() {
+        this.objects.forEach((object, objectIndex) => {
+            object.remove();
+            
+            delete this.objects[objectIndex];
+        });
+        return this;
+    }
+
+    findObjectByName(name) {
+        return this.objects.find(o => o.name === name);
+    }
+
+    removeObjectsWithNameContaining(stringPartial) {
+        this.objects.forEach((object, objectIndex) => {
+            if(object.name.includes(stringPartial)) {
+                this.objects[objectIndex].remove();
+                delete(this.objects[objectIndex]);
+            }
+        });
+    }
+
+    hide() {
+        this.hidden = true;
+    }
+
+    show() {
+        this.hidden = false;
+    }
+    
+    findObjectIndex(object) {
+        const foundObjectIndex = this.objects.findIndex((lookupObject) => {
+            
+            return lookupObject !== undefined && lookupObject.id === object.id;
+        });
+
+        if(foundObjectIndex < 0) {
+            return null;
+        }
+
+        return foundObjectIndex;
+    }
+    
+    handleKeysDown(keysDown) {
+        this.objects.forEach((object) => {
+            if(object.controlledByKeyPad) {
+                object.handleKeysDown(keysDown);
+            }
+        });
+    }
+    
+    handleKeyUp(keysDown, keyUp) {
+        this.objects.forEach((object) => {
+            if(object.controlledByKeyPad) {
+                object.handleKeyUp(keysDown, keyUp);
+            }
+        });
+    }
+
+    handlePointerDown(position) {
+        if(this.deleted || this.hidden) {
+            return;
+        }
+        this.objects.forEach((object) => {
+            if(
+                position.x > object.rectangle.x && position.x < object.rectangle.x + object.rectangle.width &&
+                position.x > object.rectangle.y && position.y < object.rectangle.y + object.rectangle.height 
+            ) {
+                this.objectsSelected.push(object);
+                object.handlePointerDown(position);
+            }
+        });
+
+    }
+
+    handlePointerMovement(movement, pointerPosition, pointerIsDown) {
+        if(this.deleted || this.hidden) {
+            this.objectsHoveredOver = [];
+            return;
+        }
+        const previousObjectsHoveredOver = [...this.objectsHoveredOver];
+        
+        this.objects.forEach((object) => {
+            const wasHovered = previousObjectsHoveredOver.findIndex((previousObjectsHoveredOverObject) => {
+                return object.id === previousObjectsHoveredOverObject.id;
+            });
+
+            object.handlePointerMovement(movement, pointerPosition, pointerIsDown);
+            if(
+                pointerPosition.x > object.rectangle.x && pointerPosition.x < object.rectangle.x + object.rectangle.width &&
+                pointerPosition.x > object.rectangle.y && pointerPosition.y < object.rectangle.y + object.rectangle.height 
+            ) {
+                this.objectsHoveredOver.push(object);
+                object.handlePointerHover(pointerPosition, pointerIsDown);
+                
+                return;
+            }
+            if(wasHovered > -1) {
+                object.handlePointerHoverLeave();
+            }
+        });
+    }
+
+    handlePointerEnd(movement) {
+        if(this.deleted || this.hidden) {
+            this.objectsSelected = [];
+            return;
+        }
+        this.objects.forEach((object) => {
+            object.handlePointerEnd(movement);
+        });
+
+        this.objectsSelected = [];
     }
 
     draw(context) {
-        for (var c = 0; c < this.tileMap.cols; c++) {
-            for (var r = 0; r < this.tileMap.rows; r++) {
-                var tile = this.getTile(c, r);
-                if (tile === 0) { // 0 => empty tile
+        if(this.deleted || this.hidden) {
+            return;
+        }
+        
+        if(this.camera) {
+            // context.translate(-x, -y);
+            this.camera.preDraw(context);
+        }
+
+        this.objects.forEach((object) => {
+            this.objects.forEach((potentialCollisionObject) => {
+                
+                if(potentialCollisionObject.id === object.id) {
                     return;
                 }
-                
-                context.drawImage(
-                    this.image,
-                    (tile - 1) * this.tileMap.tsize,
-                    0,
-                    this.tileMap.tsize,
-                    this.tileMap.tsize, 
-                    c * this.tileMap.tsize, 
-                    r * this.tileMap.tsize,
-                    this.tileMap.tsize,
-                    this.tileMap.tsize
-                );
+
+                object.detectCollisions(potentialCollisionObject);
+            });
+            object.handleCollisions();
+
+            object.calculatePosition();
+            if(this.showHitBoxes) {
+                object.setShowHitBox(true);
+                object.drawHitBox(context);
             }
+            
+            object.draw(context);
+        });
+
+        if(this.camera) {
+            this.camera.postDraw(context);
         }
     }
 }
