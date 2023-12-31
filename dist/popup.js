@@ -28,7 +28,7 @@ var Popup = /** @class */ (function (_super) {
         var _a, _b, _c;
         var popupWidth = 0.8 * canvas.width;
         var popupHeight = 0.8 * canvas.height;
-        _this = _super.call(this, scene, name, rectangle !== null && rectangle !== void 0 ? rectangle : new rectangle_1.Rectangle((canvas.width - popupWidth) / 4, (canvas.height - popupHeight) / 4, popupWidth, popupHeight)) || this;
+        _this = _super.call(this, scene, name, rectangle !== null && rectangle !== void 0 ? rectangle : new rectangle_1.Rectangle((canvas.width - popupWidth) / 8, (canvas.height - popupHeight) / 8, popupWidth, popupHeight)) || this;
         _this.canvas = canvas;
         _this.title = new textItem_1.TextItem(scene, "".concat(name, ".title"), { x: _this.rectangle.x + 40, y: _this.rectangle.y + window.gamework.constants.POPUP.padding }, window.gamework.constants.POPUP.fontSize, window.gamework.constants.POPUP.fontType, window.gamework.constants.POPUP.textColour, title);
         _this.buttons = [];
