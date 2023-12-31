@@ -4,7 +4,9 @@ import { TextItem } from "./textItem";
 
 export class Popup extends GameObject {
     constructor(name, scene, canvas, title = '', rectangle = null) {
-        super(scene, name, rectangle ?? new Rectangle((canvas.width - (0.8 * canvas.width)) / 8, 50, 0.4 * canvas.width, 0.2 * canvas.height));
+        const popupWidth = 0.8 * canvas.width;
+        const popupHeight = 0.8 * canvas.height;
+        super(scene, name, rectangle ?? new Rectangle((canvas.width - (popupWidth)) / 8, canvas.height - popupHeight, popupWidth, popupHeight));
         this.canvas = canvas;
         this.title = new TextItem(scene, `${name}.title`, {x: this.rectangle.x + 40, y: this.rectangle.y + window.gamework.constants.POPUP.padding}, window.gamework.constants.POPUP.fontSize, window.gamework.constants.POPUP.fontType, window.gamework.constants.POPUP.textColour, title);
         this.buttons = [];

@@ -22,9 +22,12 @@ var textItem_1 = require("./textItem");
 var Popup = /** @class */ (function (_super) {
     __extends(Popup, _super);
     function Popup(name, scene, canvas, title, rectangle) {
+        var _this = this;
         if (title === void 0) { title = ''; }
         if (rectangle === void 0) { rectangle = null; }
-        var _this = _super.call(this, scene, name, rectangle !== null && rectangle !== void 0 ? rectangle : new rectangle_1.Rectangle((canvas.width - (0.8 * canvas.width)) / 8, 50, 0.4 * canvas.width, 0.2 * canvas.height)) || this;
+        var popupWidth = 0.8 * canvas.width;
+        var popupHeight = 0.8 * canvas.height;
+        _this = _super.call(this, scene, name, rectangle !== null && rectangle !== void 0 ? rectangle : new rectangle_1.Rectangle((canvas.width - (popupWidth)) / 8, canvas.height - popupHeight, popupWidth, popupHeight)) || this;
         _this.canvas = canvas;
         _this.title = new textItem_1.TextItem(scene, "".concat(name, ".title"), { x: _this.rectangle.x + 40, y: _this.rectangle.y + window.gamework.constants.POPUP.padding }, window.gamework.constants.POPUP.fontSize, window.gamework.constants.POPUP.fontType, window.gamework.constants.POPUP.textColour, title);
         _this.buttons = [];
