@@ -6,7 +6,7 @@ export class Popup extends GameObject {
     constructor(name, scene, canvas, title = '', rectangle = null) {
         const popupWidth = 0.8 * canvas.width;
         const popupHeight = 0.8 * canvas.height;
-        super(scene, name, rectangle ?? new Rectangle((canvas.width - (popupWidth)) / 2, canvas.height - popupHeight, popupWidth, popupHeight));
+        super(scene, name, rectangle ?? new Rectangle((canvas.width - popupWidth) / 4, (canvas.height - popupHeight) / 4, popupWidth, popupHeight));
         this.canvas = canvas;
         this.title = new TextItem(scene, `${name}.title`, {x: this.rectangle.x + 40, y: this.rectangle.y + window.gamework.constants.POPUP.padding}, window.gamework.constants.POPUP.fontSize, window.gamework.constants.POPUP.fontType, window.gamework.constants.POPUP.textColour, title);
         this.buttons = [];
