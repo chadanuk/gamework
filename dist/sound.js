@@ -4,7 +4,7 @@ exports.Sound = void 0;
 var Sound = /** @class */ (function () {
     function Sound(name, sound, loop, standardVolume) {
         if (loop === void 0) { loop = false; }
-        if (standardVolume === void 0) { standardVolume = 4; }
+        if (standardVolume === void 0) { standardVolume = 0.4; }
         this.name = name;
         this.audio = null;
         this.loop = loop;
