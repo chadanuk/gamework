@@ -161,7 +161,6 @@ export class Scene {
         }
         this.objects.forEach((object) => {
             object.handlePointerEnd(movement);
-            object.draw(this.game.context);
         });
 
         this.objectsSelected = [];

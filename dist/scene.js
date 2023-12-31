@@ -144,14 +144,12 @@ var Scene = /** @class */ (function () {
         });
     };
     Scene.prototype.handlePointerEnd = function (movement) {
-        var _this = this;
         if (this.deleted || this.hidden) {
             this.objectsSelected = [];
             return;
         }
         this.objects.forEach(function (object) {
             object.handlePointerEnd(movement);
-            object.draw(_this.game.context);
         });
         this.objectsSelected = [];
     };
