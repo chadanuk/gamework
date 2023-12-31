@@ -1,1 +1,1 @@
-{"version":3,"file":"popup.d.ts","sourceRoot":"","sources":["../src/popup.js"],"names":[],"mappings":"AAIA;IACI,iFAQC;IAJG,YAAoB;IACpB,gBAAmR;IACnR,eAAiB;IACjB,2BAAsE;IAG1E,2BAGC;IAED,qBAMC;IAOD,kBAEC;IAED,6BAgBC;CAeJ;2BApE0B,cAAc;yBAEhB,YAAY"}
+{"version":3,"file":"popup.d.ts","sourceRoot":"","sources":["../src/popup.js"],"names":[],"mappings":"AAIA;IACI,iFAYC;IARG,YAAoB;IACpB,gBAAmR;IACnR,eAAiB;IACjB,2BAAsE;IAO1E,2BAGC;IAED,qBAMC;IAOD,kBAEC;IAED,6BAgBC;CAeJ;2BAxE0B,cAAc;yBAEhB,YAAY"}

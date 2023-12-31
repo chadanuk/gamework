@@ -25,6 +25,7 @@ var Popup = /** @class */ (function (_super) {
         var _this = this;
         if (title === void 0) { title = ''; }
         if (rectangle === void 0) { rectangle = null; }
+        var _a, _b, _c;
         var popupWidth = 0.8 * canvas.width;
         var popupHeight = 0.8 * canvas.height;
         _this = _super.call(this, scene, name, rectangle !== null && rectangle !== void 0 ? rectangle : new rectangle_1.Rectangle((canvas.width - popupWidth) / 4, (canvas.height - popupHeight) / 4, popupWidth, popupHeight)) || this;
@@ -32,6 +33,9 @@ var Popup = /** @class */ (function (_super) {
         _this.title = new textItem_1.TextItem(scene, "".concat(name, ".title"), { x: _this.rectangle.x + 40, y: _this.rectangle.y + window.gamework.constants.POPUP.padding }, window.gamework.constants.POPUP.fontSize, window.gamework.constants.POPUP.fontType, window.gamework.constants.POPUP.textColour, title);
         _this.buttons = [];
         _this.verticalButtonSpacing = window.gamework.constants.BUTTONS.spacing;
+        _this.colours.overlayColour = (_a = window.gamework.constants.COLOURS.modalOverlayColour) !== null && _a !== void 0 ? _a : 'rgba(0,0,0,0.5)';
+        _this.colours.borderColour = (_b = window.gamework.constants.COLOURS.modalBorderColour) !== null && _b !== void 0 ? _b : '#000000';
+        _this.colours.backgroundColour = (_c = window.gamework.constants.COLOURS.modalBackgroundColour) !== null && _c !== void 0 ? _c : 'rgba(150, 150,255, 0.5)';
         return _this;
     }
     Popup.prototype.setTitle = function (title) {
@@ -68,10 +72,10 @@ var Popup = /** @class */ (function (_super) {
     };
     Popup.prototype.draw = function (context) {
         context.beginPath();
-        context.fillStyle = 'rgba(0,0,0,0.5)';
+        context.fillStyle = this.colours.overlayColour;
         context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-        context.strokeStyle = window.gamework.constants.COLOURS.modalBorderColour;
-        context.fillStyle = window.gamework.constants.COLOURS.modalBackgroundColour;
+        context.strokeStyle = this.colours.borderColour;
+        context.fillStyle = this.colours.backgroundColour;
         context.fillRect(this.rectangle.x, this.rectangle.y, this.rectangle.width, this.rectangle.height);
         context.fill();
         context.strokeRect(this.rectangle.x, this.rectangle.y, this.rectangle.width, this.rectangle.height);
