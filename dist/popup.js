@@ -26,6 +26,7 @@ var Popup = /** @class */ (function (_super) {
         if (title === void 0) { title = ''; }
         if (rectangle === void 0) { rectangle = null; }
         var _a, _b, _c;
+        console.log(canvas.width);
         var popupWidth = 0.5 * canvas.width;
         var popupHeight = 0.5 * canvas.height;
         _this = _super.call(this, scene, name, rectangle !== null && rectangle !== void 0 ? rectangle : new rectangle_1.Rectangle((canvas.width - popupWidth) / 8, (canvas.height - popupHeight) / 8, popupWidth, popupHeight)) || this;
