@@ -14,12 +14,16 @@ export class Sound {
     load() {
       this.audio = new Audio(this.sound);
       this.audio.preload = 'auto';
+      this.audio.muted = true;
       this.audio.loop = this.loop;
       this.audio.load();
 
       this.audio.onloadeddata = () => {
         this.loaded = true;
       }
+      this.audio.onplay(() => {
+        this.audio.muted = false;
+      })
     }
 
     play() {

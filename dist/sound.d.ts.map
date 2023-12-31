@@ -1,1 +1,1 @@
-{"version":3,"file":"sound.d.ts","sourceRoot":"","sources":["../src/sound.js"],"names":[],"mappings":"AAAA;IACI,4EAUC;IATG,UAAgB;IAChB,wBAAiB;IACjB,cAAgB;IAChB,WAAkB;IAClB,gBAAmB;IACnB,uBAAoC;IACpC,iBAAoB;IAKxB,aASC;IAED,aASC;IAED,aAGC;CACJ"}
+{"version":3,"file":"sound.d.ts","sourceRoot":"","sources":["../src/sound.js"],"names":[],"mappings":"AAAA;IACI,4EAUC;IATG,UAAgB;IAChB,wBAAiB;IACjB,cAAgB;IAChB,WAAkB;IAClB,gBAAmB;IACnB,uBAAoC;IACpC,iBAAoB;IAKxB,aAaC;IAED,aASC;IAED,aAGC;CACJ"}
