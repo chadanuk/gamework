@@ -4,6 +4,7 @@ export class Popup extends GameObject {
     title: TextItem;
     buttons: any[];
     verticalButtonSpacing: any;
+    colours: {};
     setTitle(title: any): this;
     clearButtons(): void;
     lastButton(): any;

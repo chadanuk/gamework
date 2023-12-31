@@ -33,6 +33,7 @@ var Popup = /** @class */ (function (_super) {
         _this.title = new textItem_1.TextItem(scene, "".concat(name, ".title"), { x: _this.rectangle.x + 40, y: _this.rectangle.y + window.gamework.constants.POPUP.padding }, window.gamework.constants.POPUP.fontSize, window.gamework.constants.POPUP.fontType, window.gamework.constants.POPUP.textColour, title);
         _this.buttons = [];
         _this.verticalButtonSpacing = window.gamework.constants.BUTTONS.spacing;
+        _this.colours = {};
         _this.colours.overlayColour = (_a = window.gamework.constants.COLOURS.modalOverlayColour) !== null && _a !== void 0 ? _a : 'rgba(0,0,0,0.5)';
         _this.colours.borderColour = (_b = window.gamework.constants.COLOURS.modalBorderColour) !== null && _b !== void 0 ? _b : '#000000';
         _this.colours.backgroundColour = (_c = window.gamework.constants.COLOURS.modalBackgroundColour) !== null && _c !== void 0 ? _c : 'rgba(150, 150,255, 0.5)';

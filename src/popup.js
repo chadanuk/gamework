@@ -12,6 +12,7 @@ export class Popup extends GameObject {
         this.buttons = [];
         this.verticalButtonSpacing = window.gamework.constants.BUTTONS.spacing;
 
+        this.colours = {};
         this.colours.overlayColour= window.gamework.constants.COLOURS.modalOverlayColour ?? 'rgba(0,0,0,0.5)';
         this.colours.borderColour= window.gamework.constants.COLOURS.modalBorderColour ?? '#000000';
         this.colours.backgroundColour= window.gamework.constants.COLOURS.modalBackgroundColour ?? 'rgba(150, 150,255, 0.5)';
