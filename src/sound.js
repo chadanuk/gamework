@@ -21,9 +21,9 @@ export class Sound {
       this.audio.onloadeddata = () => {
         this.loaded = true;
       }
-      this.audio.onplay(() => {
+      this.audio.onplay = () => {
         this.audio.muted = false;
-      })
+      }
     }
 
     play() {

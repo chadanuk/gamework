@@ -25,9 +25,9 @@ var Sound = /** @class */ (function () {
         this.audio.onloadeddata = function () {
             _this.loaded = true;
         };
-        this.audio.onplay(function () {
+        this.audio.onplay = function () {
             _this.audio.muted = false;
-        });
+        };
     };
     Sound.prototype.play = function () {
         var _this = this;
