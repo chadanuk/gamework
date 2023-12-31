@@ -144,11 +144,12 @@ export class Scene {
             ) {
                 this.objectsHoveredOver.push(object);
                 object.handlePointerHover(pointerPosition, pointerIsDown);
-                
+                object.draw(this.game.context);
                 return;
             }
             if(wasHovered > -1) {
                 object.handlePointerHoverLeave();
+                object.draw(this.game.context);
             }
         });
     }
@@ -160,6 +161,7 @@ export class Scene {
         }
         this.objects.forEach((object) => {
             object.handlePointerEnd(movement);
+            object.draw(this.game.context);
         });
 
         this.objectsSelected = [];

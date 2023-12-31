@@ -134,20 +134,24 @@ var Scene = /** @class */ (function () {
                 pointerPosition.x > object.rectangle.y && pointerPosition.y < object.rectangle.y + object.rectangle.height) {
                 _this.objectsHoveredOver.push(object);
                 object.handlePointerHover(pointerPosition, pointerIsDown);
+                object.draw(_this.game.context);
                 return;
             }
             if (wasHovered > -1) {
                 object.handlePointerHoverLeave();
+                object.draw(_this.game.context);
             }
         });
     };
     Scene.prototype.handlePointerEnd = function (movement) {
+        var _this = this;
         if (this.deleted || this.hidden) {
             this.objectsSelected = [];
             return;
         }
         this.objects.forEach(function (object) {
             object.handlePointerEnd(movement);
+            object.draw(_this.game.context);
         });
         this.objectsSelected = [];
     };
