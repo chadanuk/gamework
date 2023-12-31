@@ -32,23 +32,23 @@ export class GameObject {
     sounds: any[];
     trace: any[];
     pause(): void;
-    addSound(sound: any): GameObject;
-    setShowHitBox(showHitBox: any): GameObject;
-    setAsset(asset: any): GameObject;
-    setScene(scene: any): GameObject;
-    setAccelerateIndirectionOfTravelOnly(followVelocity: any): GameObject;
-    setIgnoreCollisions(ignoreCollisions: any): GameObject;
-    setMaxSpeed(maxSpeed: any): GameObject;
-    setVelocity(velocity: any): GameObject;
-    setAcceleration(acceleration: any): GameObject;
-    setFriction(friction: any): GameObject;
+    addSound(sound: any): this;
+    setShowHitBox(showHitBox: any): this;
+    setAsset(asset: any): this;
+    setScene(scene: any): this;
+    setAccelerateIndirectionOfTravelOnly(followVelocity: any): this;
+    setIgnoreCollisions(ignoreCollisions: any): this;
+    setMaxSpeed(maxSpeed: any): this;
+    setVelocity(velocity: any): this;
+    setAcceleration(acceleration: any): this;
+    setFriction(friction: any): this;
     getFriction(): any;
     updateVelocity(velocity?: {
         x: any;
         y: any;
     }): void;
     remove(): void;
-    setPosition(position: any): GameObject;
+    setPosition(position: any): this;
     updatePositionBasedOnKeys(): void;
     getPosition(): {
         x: any;
@@ -70,7 +70,7 @@ export class GameObject {
     drawHitBox(context: any): void;
     drawTraceLine(context: any): void;
     drawRotated(context: any): void;
-    setScreenDrawObject(shape: any): GameObject;
+    setScreenDrawObject(shape: any): this;
     getDrawObjectPosition(): {
         x: any;
         y: any;

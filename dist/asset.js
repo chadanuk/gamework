@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.Asset = void 0;
 var Asset = /** @class */ (function () {
     function Asset(imageSrc, gameObject, repeat) {

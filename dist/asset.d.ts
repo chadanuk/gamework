@@ -6,8 +6,8 @@ export class Asset {
     image: HTMLImageElement;
     repeat: boolean;
     findAsset(imageSrc: any): any;
-    setRepeat(value: any): Asset;
-    setGameObject(gameObject: any): Asset;
+    setRepeat(value: any): this;
+    setGameObject(gameObject: any): this;
     load(): void;
     draw(context: any): void;
 }

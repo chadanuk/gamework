@@ -14,7 +14,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.Popup = void 0;
 var gameObject_1 = require("./gameObject");
 var rectangle_1 = require("./rectangle");
@@ -57,7 +57,7 @@ var Popup = /** @class */ (function (_super) {
         }
         button.setPosition({
             x: this.rectangle.x + 40,
-            y: lastY + this.verticalButtonSpacing
+            y: lastY + this.verticalButtonSpacing,
         });
         button.setWidth(Math.min(this.rectangle.width - (40 * 2), button.rectangle.width));
         this.buttons.push(button);

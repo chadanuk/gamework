@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.Sprite = void 0;
 var Sprite = /** @class */ (function () {
     function Sprite(imageSrc, gameObject, animate) {

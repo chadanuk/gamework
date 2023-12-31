@@ -5,7 +5,7 @@ export class TextItem extends GameObject {
     fontType: string;
     colour: string;
     text: string;
-    setText(text: any): TextItem;
+    setText(text: any): this;
 }
 import { GameObject } from "./gameObject";
 //# sourceMappingURL=textItem.d.ts.map

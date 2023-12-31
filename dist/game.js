@@ -19,7 +19,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.Game = void 0;
 var constants_json_1 = require("./constants.json");
 var Game = /** @class */ (function () {
@@ -51,7 +51,7 @@ var Game = /** @class */ (function () {
             'shift',
             'control'
         ];
-        this.constants = constants_json_1["default"];
+        this.constants = constants_json_1.default;
         window.gamework = this;
     }
     Game.prototype.setConstants = function (constants) {

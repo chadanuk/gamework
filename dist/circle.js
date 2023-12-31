@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.Circle = void 0;
 var Circle = /** @class */ (function () {
     function Circle(x, y, radius) {

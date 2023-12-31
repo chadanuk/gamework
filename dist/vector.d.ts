@@ -5,9 +5,9 @@ export class Vector {
     diff(vector: any): Vector;
     distanceFrom(vector: any): number;
     angleToVector(vector: any): number;
-    subtract(vector: any): Vector;
-    add(vector: any): Vector;
-    multiply(vector: any): Vector;
-    divide(vector: any): Vector;
+    subtract(vector: any): this;
+    add(vector: any): this;
+    multiply(vector: any): this;
+    divide(vector: any): this;
 }
 //# sourceMappingURL=vector.d.ts.map

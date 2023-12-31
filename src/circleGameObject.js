@@ -69,6 +69,10 @@ export class CircleGameObject extends GameObject {
     }
 
     drawHitBox(context) {
+        if(!this.showHitBox) {
+            return;
+        }
+        
         context.strokeStyle = this.outlineColour;
         context.beginPath();
         context.arc(this.screenDrawObject.x, this.screenDrawObject.y, this.screenDrawObject.radius, 0, 2 * Math.PI);

@@ -10,7 +10,7 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.Camera = void 0;
 var vector_1 = require("./vector");
 var Camera = /** @class */ (function () {

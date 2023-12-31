@@ -10,7 +10,7 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.GameObject = void 0;
 var collision_1 = require("./collision");
 var vector_1 = require("./vector");
@@ -33,12 +33,12 @@ var optionDefaults = {
     controlledByKeyPad: false,
     accelerateInDirectionOfTravelOnly: false,
     drawTrace: false,
-    showHitBox: false
+    showHitBox: false,
 };
 var GameObject = /** @class */ (function () {
     function GameObject(scene, name, rectangle, options) {
-        if (options === void 0) { options = {}; }
         var _this = this;
+        if (options === void 0) { options = {}; }
         this.id = Math.floor(new Date().getTime() * Math.random());
         this.name = name;
         this.scene = scene;

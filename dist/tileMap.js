@@ -25,7 +25,7 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.TileMap = void 0;
 var GameObject_1 = require("gamework/src/GameObject");
 var Rectangle_1 = require("gamework/src/Rectangle");

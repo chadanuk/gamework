@@ -14,7 +14,7 @@ export class Camera {
     effectDuration: number;
     positionChangeRequired: Vector;
     updateViewPortbasedOnCavasSize(): void;
-    setPadding(padding: any): Camera;
+    setPadding(padding: any): this;
     followObject(object: any, padding?: number): void;
     followObjects(objects: any, padding?: number): void;
     easeLinear(time: any, currentValue: any, endValue: any, duration: any): any;

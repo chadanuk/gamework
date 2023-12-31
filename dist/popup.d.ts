@@ -4,10 +4,10 @@ export class Popup extends GameObject {
     title: TextItem;
     buttons: any[];
     verticalButtonSpacing: any;
-    setTitle(title: any): Popup;
+    setTitle(title: any): this;
     clearButtons(): void;
     lastButton(): any;
-    addButton(button: any): Popup;
+    addButton(button: any): this;
 }
 import { GameObject } from "./gameObject";
 import { TextItem } from "./textItem";

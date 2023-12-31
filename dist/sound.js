@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.Sound = void 0;
 var Sound = /** @class */ (function () {
     function Sound(name, sound, loop, standardVolume) {
@@ -31,7 +31,7 @@ var Sound = /** @class */ (function () {
             return;
         }
         this.playing = true;
-        // soundToPlay.volume = this.standardVolume;
+        this.audio.volume = this.standardVolume;
         this.audio.play();
         this.audio.addEventListener('ended', function () { return _this.playing = false; });
     };

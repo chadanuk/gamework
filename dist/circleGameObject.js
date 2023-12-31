@@ -14,7 +14,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.CircleGameObject = void 0;
 var collision_1 = require("./collision");
 var gameObject_1 = require("./gameObject");
@@ -75,6 +75,9 @@ var CircleGameObject = /** @class */ (function (_super) {
         this.detectCollisionsWithRectangle(object);
     };
     CircleGameObject.prototype.drawHitBox = function (context) {
+        if (!this.showHitBox) {
+            return;
+        }
         context.strokeStyle = this.outlineColour;
         context.beginPath();
         context.arc(this.screenDrawObject.x, this.screenDrawObject.y, this.screenDrawObject.radius, 0, 2 * Math.PI);

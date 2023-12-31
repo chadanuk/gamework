@@ -14,7 +14,7 @@ export class Game {
     keysDown: any[];
     keysToListenFor: string[];
     constants: any;
-    setConstants(constants: any): Game;
+    setConstants(constants: any): this;
     pause(): void;
     removeEventListeners(): void;
     addEventListeners(): void;
@@ -30,7 +30,7 @@ export class Game {
     setUpCanvas(): void;
     initialiseContext(): void;
     context: any;
-    addScene(scene: any): Game;
+    addScene(scene: any): this;
     removeScene(sceneToRemove: any): void;
     startLoop(): void;
     draw(): void;

@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.Rectangle = void 0;
 var Rectangle = /** @class */ (function () {
     function Rectangle(x, y, width, height) {

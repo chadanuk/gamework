@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.Collision = void 0;
 var Collision = /** @class */ (function () {
     function Collision(type, object1, object2) {

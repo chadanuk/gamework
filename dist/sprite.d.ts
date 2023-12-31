@@ -11,16 +11,16 @@ export class Sprite {
     frameRate: number;
     column: number;
     row: number;
-    setColumns(value: any): Sprite;
+    setColumns(value: any): this;
     columns: any;
-    setRows(value: any): Sprite;
+    setRows(value: any): this;
     rows: any;
-    setColumn(value: any): Sprite;
-    setRow(value: any): Sprite;
+    setColumn(value: any): this;
+    setRow(value: any): this;
     nextColumn(): void;
     nextRow(): void;
     nextImage(): void;
-    setGameObject(gameObject: any): Sprite;
+    setGameObject(gameObject: any): this;
     load(): void;
     draw(context: any): void;
 }

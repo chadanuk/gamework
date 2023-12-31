@@ -12,9 +12,9 @@ export class TileMap {
     image: HTMLImageElement;
     isLoaded: any;
     tileset: any;
-    setScene(scene: any): TileMap;
+    setScene(scene: any): this;
     scene: any;
-    setShowHitBox(showHitBox: any): TileMap;
+    setShowHitBox(showHitBox: any): this;
     drawHitBox(context: any): void;
     handleCollisions(): void;
     calculatePosition(): void;

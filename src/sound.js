@@ -28,7 +28,7 @@ export class Sound {
         }
         this.playing = true;
         
-        // soundToPlay.volume = this.standardVolume;
+        this.audio.volume = this.standardVolume;
         this.audio.play();
         this.audio.addEventListener('ended', () => this.playing = false);
     }   
