@@ -19,14 +19,10 @@ var Sound = /** @class */ (function () {
         var _this = this;
         this.audio = new Audio(this.sound);
         this.audio.preload = 'auto';
-        this.audio.muted = true;
         this.audio.loop = this.loop;
         this.audio.load();
         this.audio.onloadeddata = function () {
             _this.loaded = true;
-        };
-        this.audio.onplay = function () {
-            _this.audio.muted = false;
         };
     };
     Sound.prototype.play = function () {
