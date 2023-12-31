@@ -1,5 +1,5 @@
 export class Sound {
-    constructor(name, sound, loop = false, standardVolume = 4) {
+    constructor(name, sound, loop = false, standardVolume = 0.4) {
         this.name = name;
         this.audio = null;
         this.loop = loop;
