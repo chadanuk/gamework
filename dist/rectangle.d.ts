@@ -1,5 +1,5 @@
 export class Rectangle {
-    constructor(x: any, y: any, width: any, height: any);
+    constructor(x: any, y: any, width: any, height: any, angle?: number);
     x: any;
     y: any;
     width: any;
