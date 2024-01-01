@@ -4,8 +4,8 @@ import { TextItem } from "./textItem";
 
 export class Popup extends GameObject {
     constructor(name, scene, canvas, title = '', rectangle = null) {
-        const popupWidth = 0.4 * canvas.width;
-        const popupHeight = 0.4 * canvas.height;
+        const popupWidth = 0.8 * canvas.width;
+        const popupHeight = 0.8 * canvas.height;
         
         super(scene, name, rectangle ?? new Rectangle((canvas.width - popupWidth) / 8, (canvas.height - popupHeight) / 8, popupWidth, popupHeight));
         this.canvas = canvas;
