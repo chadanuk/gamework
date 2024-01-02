@@ -1,4 +1,4 @@
 export const degreesToRadians = (degrees) => {
-    return degrees * (Math.PI / 180)
+    return (degrees % 360) * (Math.PI / 180);
 }
 

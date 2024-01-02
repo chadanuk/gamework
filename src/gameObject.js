@@ -469,7 +469,6 @@ export class GameObject {
                 this.currentCollisions.push(new Collision('bottom', this, object));
             }
         }
-    
     }
     
     collisionExists(collisionType) {
