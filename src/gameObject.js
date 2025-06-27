@@ -1,5 +1,6 @@
 import { Collision } from "./collision";
 import { Vector } from "./vector";
+import { Collisions } from './collisions';
 
 /**
  * Default options for GameObject.
@@ -526,38 +527,9 @@ export class GameObject {
     }
 
     detectCollisions(object) {
-        if(object.ignoreCollisions) {
-            return;
-        }
-
-        // Find the sides of each rectangle
-          // Find the sides of each rectangle
-        const rect1Left = this.rectangle.x;
-        const rect1Right = this.rectangle.x + this.rectangle.width ;
-        const rect1Top = this.rectangle.y;
-        const rect1Bottom = this.rectangle.y + this.rectangle.height ;
-
-        const rect2Left = object.rectangle.x;
-        const rect2Right = object.rectangle.x + object.rectangle.width;
-        const rect2Top = object.rectangle.y;
-        const rect2Bottom = object.rectangle.y + object.rectangle.height;
-
-        // Check for collisions
-        if (rect1Right >= rect2Left && rect1Left <= rect2Right && rect1Bottom >= rect2Top && rect1Top <= rect2Bottom) {
-            // There is a collision
-            if (rect1Right >= rect2Left && rect1Left < rect2Left && this.velocity.x > 0) {
-                this.currentCollisions.push(new Collision('right', this, object));
-            }
-            if (rect1Left <= rect2Right && rect1Right > rect2Right && this.velocity.x < 0) {
-                this.currentCollisions.push(new Collision('left', this, object));
-
-            }
-            if (rect1Top <= rect2Bottom && rect1Bottom > rect2Bottom && this.velocity.y < 0) {
-                this.currentCollisions.push(new Collision('top', this, object));
-            }
-            if (rect1Bottom >= rect2Top && rect1Top < rect2Top && this.velocity.y > 0) {
-                this.currentCollisions.push(new Collision('bottom', this, object));
-            }
+        const collisions = Collisions.detect(this, object);
+        for (const c of collisions) {
+            this.currentCollisions.push(c);
         }
     }
     

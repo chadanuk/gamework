@@ -560,4 +560,15 @@ describe('detectCollisions', () => {
     expect(obj.currentCollisions.some(c => c.type === 'right')).toBe(true);
     expect(obj.currentCollisions.some(c => c.type === 'bottom')).toBe(true);
   });
+});
+
+describe('GameObject rotational collision', () => {
+  it('detectCollisions detects rotated collision and adds to currentCollisions', () => {
+    const scene = { game: { canvas: { width: 100, height: 100 } }, addObject: jest.fn() };
+    const obj1 = new (require('../src/gameObject').GameObject)(scene, 'rot1', { x: 0, y: 0, width: 10, height: 10 }, { currentAngle: 45 });
+    const obj2 = new (require('../src/gameObject').GameObject)(scene, 'obj2', { x: 5, y: 5, width: 10, height: 10 });
+    obj1.currentCollisions = [];
+    obj1.detectCollisions(obj2);
+    expect(obj1.currentCollisions.some(c => c.type === 'rotated')).toBe(true);
+  });
 }); 
