@@ -41,7 +41,7 @@ export class GameObject {
         this.name = name;
         this.scene = scene;
         this.rectangle = rectangle;
-        this.shape = this.rectangle;
+        this.shape = {...this.rectangle};
         this.screenDrawObject = this.rectangle;
         
         // Set defaults for typing
