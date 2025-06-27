@@ -18,6 +18,11 @@
     },
     "homepage": "https://github.com/chadanuk/gamework#readme",
     "devDependencies": {
+        "@babel/preset-env": "^7.27.2",
+        "@babel/preset-typescript": "^7.27.1",
+        "babel-jest": "^30.0.2",
+        "jest": "^30.0.3",
+        "jest-environment-jsdom": "^30.0.2",
         "typescript": "^5.0.2"
     }
 }

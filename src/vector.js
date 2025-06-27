@@ -37,7 +37,7 @@ export class Vector {
      * @returns {number}
      */
     angleToVector(vector) {
-        return Math.atan2(vector.x - this.x, vector.y - this.y) * 180 / Math.PI
+        return Math.atan2(vector.y - this.y, vector.x - this.x) * 180 / Math.PI;
     }
 
     /**

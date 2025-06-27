@@ -14,5 +14,6 @@ export class Rectangle {
         this.y = y;
         this.width = width;
         this.height = height;
+        this.angle = angle;
     }
 }
