@@ -1,7 +1,15 @@
 import { Wall } from "./wall";
 const WALL_DEPTH = window.gamework.WALL_DEPTH;
 
+/**
+ * OuterWalls class for managing the outer boundary walls of the game.
+ */
 export class OuterWalls {
+    /**
+     * @param {Object} scene
+     * @param {Object|null} [gap=null]
+     * @param {Array} [wallsConfig]
+     */
     constructor(scene, gap = null, wallsConfig = [
         {x: 0, y: 0, w: canvas.width, h: WALL_DEPTH},
         {x: (canvas.width) - WALL_DEPTH, y: WALL_DEPTH, w: WALL_DEPTH, h: canvas.height - (2 *  - WALL_DEPTH)},
@@ -17,6 +25,11 @@ export class OuterWalls {
         this.generateWalls();
     }
     
+    /**
+     * Set the wall configuration and optional gap.
+     * @param {Array} wallsConfig
+     * @param {Object|null} gap
+     */
     setWallsConfig(wallsConfig, gap) {
         this.removeWallsFromScene();
         this.walls = [];
@@ -25,10 +38,15 @@ export class OuterWalls {
         this.generateWalls();
     }
 
+    /** Remove all walls from the scene. */
     removeWallsFromScene() {
         this.scene.removeObjectsWithNameContaining('Wall');
     }
 
+    /**
+     * Find the wall index for the gap.
+     * @returns {number}
+     */
     findWallIndexForGap() {
         if(!this.gap) {
             return -1;
@@ -41,6 +59,7 @@ export class OuterWalls {
         });
     }
     
+    /** Split a wall to create a gap. */
     splitWallForGap() {
         const pixelWallConfigIndex = this.findWallIndexForGap();
         const pixelWallConfig = this.pixelWallsConfig[pixelWallConfigIndex];
@@ -65,6 +84,7 @@ export class OuterWalls {
         this.pixelWallsConfig.push(newWall);
     }
 
+    /** Convert wall configuration to pixel values. */
     convertWallConfigToPixels() {
         this.pixelWallsConfig = [];
         this.wallsConfig.forEach((wallConfig) => {
@@ -80,6 +100,7 @@ export class OuterWalls {
         });
     }
 
+    /** Generate the wall objects based on configuration. */
     generateWalls() {
         this.convertWallConfigToPixels();
         

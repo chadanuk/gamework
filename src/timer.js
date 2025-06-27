@@ -1,4 +1,10 @@
+/**
+ * Timer class for measuring elapsed time.
+ */
 export class Timer {
+    /**
+     * Create a new Timer.
+     */
     constructor() {
         this.startTime = null;
         this.currentTime = null;
@@ -6,6 +12,9 @@ export class Timer {
         this.timer = null;
     }
 
+    /**
+     * Start the timer.
+     */
     start() {
         this.startTime = new Date();
         this.timeElapsed = 0;
@@ -15,10 +24,12 @@ export class Timer {
         }, 10);   
     }
 
+    /**
+     * Stop the timer and clear state.
+     */
     stop() {
         this.startTime = null;
         this.currentTime = null;
-
         clearInterval(this.timer);
     }
 }

@@ -2,7 +2,17 @@ import { GameObject } from "./gameObject";
 import { Rectangle } from "./rectangle";
 import { TextItem } from "./textItem";
 
+/**
+ * Popup class for modal dialogs and overlays.
+ */
 export class Popup extends GameObject {
+    /**
+     * @param {string} name
+     * @param {Object} scene
+     * @param {HTMLCanvasElement} canvas
+     * @param {string} [title='']
+     * @param {Object|null} [rectangle=null]
+     */
     constructor(name, scene, canvas, title = '', rectangle = null) {
         const popupWidth = 0.8 * canvas.width;
         const popupHeight = 0.8 * canvas.height;
@@ -19,11 +29,19 @@ export class Popup extends GameObject {
         this.colours.backgroundColour= window.gamework.constants.COLOURS.modalBackgroundColour ?? 'rgba(150, 150,255, 0.5)';
     }
 
+    /**
+     * Set the popup title.
+     * @param {string} title
+     * @returns {Popup}
+     */
     setTitle(title) {
         this.title.text = title
         return this;
     }
 
+    /**
+     * Remove all buttons from the popup.
+     */
     clearButtons() {
         this.buttons.forEach((button) => {
             button.remove();
@@ -32,15 +50,27 @@ export class Popup extends GameObject {
         this.buttons = [];
     }
     
+    /**
+     * Remove the popup and its buttons.
+     */
     remove() {
         this.deleted = true;
         this.buttons = [];
     }
 
+    /**
+     * Get the last button added to the popup.
+     * @returns {Object|undefined}
+     */
     lastButton() {
         return this.buttons[this.buttons.length - 1];
     }
 
+    /**
+     * Add a button to the popup.
+     * @param {Object} button
+     * @returns {Popup}
+     */
     addButton(button) {
         const lastButton = this.lastButton();
         const lastY = lastButton === undefined ? this.title.rectangle.y : lastButton.rectangle.y
@@ -59,6 +89,10 @@ export class Popup extends GameObject {
         return this;
     }
 
+    /**
+     * Draw the popup and its title.
+     * @param {CanvasRenderingContext2D} context
+     */
     draw(context) {         
         context.beginPath();
         context.fillStyle = this.colours.overlayColour;

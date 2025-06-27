@@ -2,8 +2,17 @@ import { Collision } from "./collision";
 import { GameObject } from "./gameObject";
 import { Rectangle } from "./rectangle";
 
-
+/**
+ * CircleGameObject class for circular game objects.
+ */
 export class CircleGameObject extends GameObject {
+    /**
+     * @param {Object} scene
+     * @param {string} name
+     * @param {Object} circle
+     * @param {Object} velocity
+     * @param {number} [rotation=0]
+     */
     constructor(scene, name, circle, velocity, rotation = 0) {
         super(scene, name, new Rectangle(circle.x - circle.radius, circle.y - circle.radius, circle.radius * 2, circle.radius * 2), {velocity, rotation});
         
@@ -12,6 +21,11 @@ export class CircleGameObject extends GameObject {
     }
     
     
+    /**
+     * Set the position of the circle game object.
+     * @param {Object} position
+     * @returns {CircleGameObject}
+     */
     setPosition(position) {
         this.rectangle.x = position.x - this.circle.radius;
         this.rectangle.y = position.y - this.circle.radius;
@@ -24,10 +38,18 @@ export class CircleGameObject extends GameObject {
     }
     
  
+    /**
+     * Detect collisions with another circle game object.
+     * @param {Object} object
+     */
     detectCollisionsWithOtherCircle(object) {
-        // ToDO detect circles colliding
+        // TODO: Implement circle-circle collision detection
     }
 
+    /**
+     * Detect collisions with a rectangle game object.
+     * @param {Object} object
+     */
     detectCollisionsWithRectangle(object) {
         if(object.ignoreCollisions) {
             return;
@@ -59,6 +81,10 @@ export class CircleGameObject extends GameObject {
         }
     }
 
+    /**
+     * Detect collisions with another object.
+     * @param {Object} object
+     */
     detectCollisions(object) {
         if(object instanceof CircleGameObject) {
             this.detectCollisionsWithOtherCircle(object);
@@ -68,6 +94,10 @@ export class CircleGameObject extends GameObject {
         this.detectCollisionsWithRectangle(object);
     }
 
+    /**
+     * Draw the hitbox for the circle game object.
+     * @param {CanvasRenderingContext2D} context
+     */
     drawHitBox(context) {
         if(!this.showHitBox) {
             return;

@@ -1,5 +1,9 @@
 import { Collision } from "./collision";
 import { Vector } from "./vector";
+
+/**
+ * Default options for GameObject.
+ */
 const optionDefaults = {
     velocity: new Vector(0, 0), 
     acceleration: new Vector(0, 0), 
@@ -22,7 +26,16 @@ const optionDefaults = {
     showHitBox: false,
 };
 
+/**
+ * Base class for all interactive/movable objects in the game.
+ */
 export class GameObject {
+    /**
+     * @param {Object} scene - The scene this object belongs to.
+     * @param {string} name - The name of the object.
+     * @param {Object} rectangle - The rectangle/shape of the object.
+     * @param {Object} options - Additional options for the object.
+     */
     constructor(scene, name, rectangle, options = {}) {
         this.id = Math.floor(new Date().getTime() * Math.random());
         this.name = name;
@@ -53,12 +66,14 @@ export class GameObject {
         this.showHitBox =  false;
 
 
-        Object.keys({...optionDefaults, ...options}).forEach((property) => {
-            if(options[property] === undefined) {
+        // Merge options with defaults
+        const mergedOptions = { ...optionDefaults, ...options };
+        Object.keys(mergedOptions).forEach((property) => {
+            if(mergedOptions[property] === undefined) {
                 return;
             }
             
-            this[property] = options[property];
+            this[property] = mergedOptions[property];
         });
         
         if(this.scene) {
@@ -69,72 +84,129 @@ export class GameObject {
         this.asset = null;
         
         this.currentCollisions = [];
-        this.keysDown = [];
+        this.keysDown = new Set();
         this.sounds = [];
         this.trace = [];
     }
 
+    /** Pause this object. */
     pause() {
         this.paused = true;
     }
     
+    /**
+     * Add a sound to this object.
+     * @param {Object} sound
+     * @returns {GameObject}
+     */
     addSound(sound) {
-        this.sounds.push(sound);
+        if (!this.sounds.includes(sound)) {
+            this.sounds.push(sound);
+        }
         return this;
     }
 
+    /**
+     * Show or hide the hitbox.
+     * @param {boolean} showHitBox
+     * @returns {GameObject}
+     */
     setShowHitBox(showHitBox) {
         this.showHitBox = showHitBox
 
         return this;
     }
 
+    /**
+     * Set the asset for this object.
+     * @param {Object} asset
+     * @returns {GameObject}
+     */
     setAsset(asset) {
         this.asset = asset;
         return this;
     }
 
+    /**
+     * Set the scene for this object.
+     * @param {Object} scene
+     * @returns {GameObject}
+     */
     setScene(scene) {
         this.scene = scene;
         return this;
     }
 
+    /**
+     * Set whether to accelerate only in direction of travel.
+     * @param {boolean} followVelocity
+     * @returns {GameObject}
+     */
     setAccelerateIndirectionOfTravelOnly(followVelocity) {
         this.accelerateInDirectionOfTravelOnly = followVelocity;
         
         return this;
     }
 
+    /**
+     * Set whether to ignore collisions.
+     * @param {boolean} ignoreCollisions
+     * @returns {GameObject}
+     */
     setIgnoreCollisions(ignoreCollisions) {
         this.ignoreCollisions = ignoreCollisions;
         
         return this;
     }
 
+    /**
+     * Set the maximum speed.
+     * @param {number} maxSpeed
+     * @returns {GameObject}
+     */
     setMaxSpeed(maxSpeed) {
         this.maxSpeed = maxSpeed;
         
         return this;
     }
 
+    /**
+     * Set the velocity.
+     * @param {Vector} velocity
+     * @returns {GameObject}
+     */
     setVelocity(velocity) {
         this.velocity = velocity;
 
         return this;
     }
 
+    /**
+     * Set the acceleration.
+     * @param {Vector} acceleration
+     * @returns {GameObject}
+     */
     setAcceleration(acceleration) {
         this.acceleration = acceleration;
 
         return this;
     }
 
+    /**
+     * Set the friction.
+     * @param {number} friction
+     * @returns {GameObject}
+     */
     setFriction(friction) {
         this.friction = friction;
 
         return this;
     }
 
+    /**
+     * Get the friction value.
+     * @returns {number}
+     */
     getFriction() {
         if(this.friction == null) {
             return 0;
@@ -143,6 +215,10 @@ export class GameObject {
         return this.friction;
     }
     
+    /**
+     * Update the velocity based on acceleration and optional override.
+     * @param {Object} velocity
+     */
     updateVelocity(velocity = {x: null, y: null}) {
         this.velocity.x += this.acceleration.x ;
         this.velocity.y += this.acceleration.y;
@@ -163,10 +239,16 @@ export class GameObject {
         }
     }
 
+    /** Mark this object as deleted. */
     remove() {
         this.deleted = true;
     }
 
+    /**
+     * Set the position of this object.
+     * @param {Object} position
+     * @returns {GameObject}
+     */
     setPosition(position) {
         this.rectangle.x = position.x;
         this.rectangle.y = position.y;
@@ -176,25 +258,33 @@ export class GameObject {
         return this;
     }
 
+    /**
+     * Update position based on keysDown.
+     */
     updatePositionBasedOnKeys(){
         this.velocity = new Vector(0, 0);
-        if(this.keysDown.includes('ArrowUp') || this.keysDown.includes('w')) {
+        const keys = Array.from(this.keysDown);
+        if(keys.includes('ArrowUp') || keys.includes('w')) {
             this.velocity.y = -this.userControlledSpeed;
         }
 
-        if(this.keysDown.includes('ArrowRight') || this.keysDown.includes('d')) {
+        if(keys.includes('ArrowRight') || keys.includes('d')) {
             this.velocity.x = this.userControlledSpeed;
         }
 
-        if(this.keysDown.includes('ArrowDown') || this.keysDown.includes('s')) {
+        if(keys.includes('ArrowDown') || keys.includes('s')) {
             this.velocity.y = this.userControlledSpeed;
         }
         
-        if(this.keysDown.includes('ArrowLeft') || this.keysDown.includes('a')) {
+        if(keys.includes('ArrowLeft') || keys.includes('a')) {
             this.velocity.x = -this.userControlledSpeed;
         }
     }
 
+    /**
+     * Get the position of this object.
+     * @returns {Object}
+     */
     getPosition() {
         return {x: this.shape.x, y: this.shape.y};
     }
@@ -258,12 +348,12 @@ export class GameObject {
 
     handleKeysDown(keysDown) {
         if(this.controlledByKeyPad) {
-            this.keysDown = keysDown;
+            this.keysDown = new Set(keysDown);
         }
     }
 
     handleKeyUp(keysDown, keyUp) {
-        this.keysDown = keysDown;
+        this.keysDown = new Set(keysDown);
         
         if(keyUp.includes('up')) {
             
@@ -426,7 +516,7 @@ export class GameObject {
     }
 
     hasNoVelocity() {
-        return (this.velocity.x === 0 && this.velocity.y === 0 || (this.controlledByKeyPad && this.keysDown.length === 0));
+        return (this.velocity.x === 0 && this.velocity.y === 0 || (this.controlledByKeyPad && this.keysDown.size === 0));
     }
 
     getCollisionByType(collisionType) {
