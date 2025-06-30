@@ -1,1 +1,1 @@
-{"version":3,"file":"circleGameObject.d.ts","sourceRoot":"","sources":["../src/circleGameObject.js"],"names":[],"mappings":"AAKA;IACI,kFAKC;IAFG,YAAoB;IAKxB,iCASC;IAGD,mDAEC;IAED,iDA6BC;CA2BJ;2BArF0B,cAAc"}
+{"version":3,"file":"circleGameObject.d.ts","sourceRoot":"","sources":["../src/circleGameObject.js"],"names":[],"mappings":"AAIA;;GAEG;AACH;IACI;;;;;;OAMG;IACH,8BALW,MAAM,yCAGN,MAAM,EAOhB;IAFG,YAAoB;IAKxB;;;;OAIG;IACH,4BAFa,gBAAgB,CAW5B;IAGD;;;OAGG;IACH,mDAEC;IAED;;;OAGG;IACH,iDA6BC;IAED;;;OAGG;IACH,oCAOC;IAED;;;OAGG;IACH,oBAFW,wBAAwB,QAiBlC;CACJ;2BAnH0B,cAAc"}

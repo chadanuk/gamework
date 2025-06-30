@@ -1,1 +1,1 @@
-{"version":3,"file":"timer.d.ts","sourceRoot":"","sources":["../src/timer.js"],"names":[],"mappings":"AAAA;IAEQ,gBAAqB;IACrB,kBAAuB;IACvB,oBAAoB;IACpB,cAAiB;IAGrB,cAOC;IAED,aAKC;CACJ"}
+{"version":3,"file":"timer.d.ts","sourceRoot":"","sources":["../src/timer.js"],"names":[],"mappings":"AAAA;;GAEG;AACH;IAKQ,gBAAqB;IACrB,kBAAuB;IACvB,oBAAoB;IACpB,sBAAiB;IAGrB;;OAEG;IACH,cAOC;IAED;;OAEG;IACH,aAIC;CACJ"}

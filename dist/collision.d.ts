@@ -1,8 +1,20 @@
+/**
+ * Collision class for representing collisions between objects.
+ */
 export class Collision {
-    constructor(type: any, object1: any, object2: any);
-    type: any;
+    /**
+     * @param {string} type
+     * @param {Object} object1
+     * @param {Object} object2
+     */
+    constructor(type: string, object1: any, object2: any);
+    type: string;
     object1: any;
     object2: any;
-    getFriction(): any;
+    /**
+     * Get the combined friction of the two objects (capped at 1).
+     * @returns {number}
+     */
+    getFriction(): number;
 }
 //# sourceMappingURL=collision.d.ts.map

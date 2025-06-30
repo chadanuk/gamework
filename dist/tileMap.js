@@ -27,14 +27,22 @@ var __assign = (this && this.__assign) || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TileMap = void 0;
-var GameObject_1 = require("gamework/src/GameObject");
-var Rectangle_1 = require("gamework/src/Rectangle");
+var gameObject_1 = require("./gameObject");
+var rectangle_1 = require("./rectangle");
+/**
+ * TileMap class for managing and drawing tile-based maps.
+ */
 var TileMap = /** @class */ (function (_super) {
     __extends(TileMap, _super);
+    /**
+     * @param {Object} scene
+     * @param {Object} [tileMap={}]
+     * @param {string|null} [tileset=null]
+     */
     function TileMap(scene, tileMap, tileset) {
         if (tileMap === void 0) { tileMap = {}; }
         if (tileset === void 0) { tileset = null; }
-        var _this = _super.call(this, scene, 'tilemap', new Rectangle_1.Rectangle(0, 0, 32, 32)) || this;
+        var _this = _super.call(this, scene, 'tilemap', new rectangle_1.Rectangle(0, 0, 32, 32)) || this;
         _this.name = 'tilemap';
         _this.id = "tilemap-".concat(new Date().getTime());
         scene.addObject(_this);
@@ -43,14 +51,24 @@ var TileMap = /** @class */ (function (_super) {
         _this.image = new Image();
         _this.isLoaded = null;
         _this.tileset = tileset;
-        _this.load();
+        _this._load();
         window.gamework.constants.ASSETS.push(_this);
         return _this;
     }
+    /**
+     * Set the scene for this tilemap.
+     * @param {Object} scene
+     * @returns {TileMap}
+     */
     TileMap.prototype.setScene = function (scene) {
         this.scene = scene;
         return this;
     };
+    /**
+     * Show or hide the hitbox.
+     * @param {boolean} showHitBox
+     * @returns {TileMap}
+     */
     TileMap.prototype.setShowHitBox = function (showHitBox) {
         this.showHitBox = showHitBox;
         return this;
@@ -58,16 +76,33 @@ var TileMap = /** @class */ (function (_super) {
     TileMap.prototype.drawHitBox = function (context) { };
     TileMap.prototype.handleCollisions = function () { };
     TileMap.prototype.calculatePosition = function () { };
-    TileMap.prototype.load = function () {
+    /**
+     * Load the tileset image and handle errors.
+     * @private
+     */
+    TileMap.prototype._load = function () {
         var _this = this;
         this.image.onload = function () {
             _this.loaded = true;
         };
+        this.image.onerror = function () {
+            console.error("Failed to load tileset image: ".concat(_this.tileset));
+        };
         this.image.src = this.tileset;
     };
+    /**
+     * Get the tile value at a specific column and row.
+     * @param {number} col
+     * @param {number} row
+     * @returns {number}
+     */
     TileMap.prototype.getTile = function (col, row) {
         return this.tileMap.tiles[row * this.tileMap.cols + col];
     };
+    /**
+     * Draw the tilemap.
+     * @param {CanvasRenderingContext2D} context
+     */
     TileMap.prototype.draw = function (context) {
         if (!this.loaded) {
             return;
@@ -85,5 +120,5 @@ var TileMap = /** @class */ (function (_super) {
         }
     };
     return TileMap;
-}(GameObject_1.GameObject));
+}(gameObject_1.GameObject));
 exports.TileMap = TileMap;

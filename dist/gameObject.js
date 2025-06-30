@@ -14,6 +14,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GameObject = void 0;
 var collision_1 = require("./collision");
 var vector_1 = require("./vector");
+var collisions_1 = require("./collisions");
+/**
+ * Default options for GameObject.
+ */
 var optionDefaults = {
     velocity: new vector_1.Vector(0, 0),
     acceleration: new vector_1.Vector(0, 0),
@@ -35,15 +39,24 @@ var optionDefaults = {
     drawTrace: false,
     showHitBox: false,
 };
+/**
+ * Base class for all interactive/movable objects in the game.
+ */
 var GameObject = /** @class */ (function () {
+    /**
+     * @param {Object} scene - The scene this object belongs to.
+     * @param {string} name - The name of the object.
+     * @param {Object} rectangle - The rectangle/shape of the object.
+     * @param {Object} options - Additional options for the object.
+     */
     function GameObject(scene, name, rectangle, options) {
-        var _this = this;
         if (options === void 0) { options = {}; }
+        var _this = this;
         this.id = Math.floor(new Date().getTime() * Math.random());
         this.name = name;
         this.scene = scene;
         this.rectangle = rectangle;
-        this.shape = this.rectangle;
+        this.shape = __assign({}, this.rectangle);
         this.screenDrawObject = this.rectangle;
         // Set defaults for typing
         this.velocity = new vector_1.Vector(0, 0);
@@ -65,11 +78,13 @@ var GameObject = /** @class */ (function () {
         this.accelerateInDirectionOfTravelOnly = false;
         this.drawTrace = false;
         this.showHitBox = false;
-        Object.keys(__assign(__assign({}, optionDefaults), options)).forEach(function (property) {
-            if (options[property] === undefined) {
+        // Merge options with defaults
+        var mergedOptions = __assign(__assign({}, optionDefaults), options);
+        Object.keys(mergedOptions).forEach(function (property) {
+            if (mergedOptions[property] === undefined) {
                 return;
             }
-            _this[property] = options[property];
+            _this[property] = mergedOptions[property];
         });
         if (this.scene) {
             this.scene.addObject(this);
@@ -77,59 +92,120 @@ var GameObject = /** @class */ (function () {
         this.sprite = null;
         this.asset = null;
         this.currentCollisions = [];
-        this.keysDown = [];
+        this.keysDown = new Set();
         this.sounds = [];
         this.trace = [];
     }
+    /** Pause this object. */
     GameObject.prototype.pause = function () {
         this.paused = true;
     };
+    /**
+     * Add a sound to this object.
+     * @param {Object} sound
+     * @returns {GameObject}
+     */
     GameObject.prototype.addSound = function (sound) {
-        this.sounds.push(sound);
+        if (!this.sounds.includes(sound)) {
+            this.sounds.push(sound);
+        }
         return this;
     };
+    /**
+     * Show or hide the hitbox.
+     * @param {boolean} showHitBox
+     * @returns {GameObject}
+     */
     GameObject.prototype.setShowHitBox = function (showHitBox) {
         this.showHitBox = showHitBox;
         return this;
     };
+    /**
+     * Set the asset for this object.
+     * @param {Object} asset
+     * @returns {GameObject}
+     */
     GameObject.prototype.setAsset = function (asset) {
         this.asset = asset;
         return this;
     };
+    /**
+     * Set the scene for this object.
+     * @param {Object} scene
+     * @returns {GameObject}
+     */
     GameObject.prototype.setScene = function (scene) {
         this.scene = scene;
         return this;
     };
+    /**
+     * Set whether to accelerate only in direction of travel.
+     * @param {boolean} followVelocity
+     * @returns {GameObject}
+     */
     GameObject.prototype.setAccelerateIndirectionOfTravelOnly = function (followVelocity) {
         this.accelerateInDirectionOfTravelOnly = followVelocity;
         return this;
     };
+    /**
+     * Set whether to ignore collisions.
+     * @param {boolean} ignoreCollisions
+     * @returns {GameObject}
+     */
     GameObject.prototype.setIgnoreCollisions = function (ignoreCollisions) {
         this.ignoreCollisions = ignoreCollisions;
         return this;
     };
+    /**
+     * Set the maximum speed.
+     * @param {number} maxSpeed
+     * @returns {GameObject}
+     */
     GameObject.prototype.setMaxSpeed = function (maxSpeed) {
         this.maxSpeed = maxSpeed;
         return this;
     };
+    /**
+     * Set the velocity.
+     * @param {Vector} velocity
+     * @returns {GameObject}
+     */
     GameObject.prototype.setVelocity = function (velocity) {
         this.velocity = velocity;
         return this;
     };
+    /**
+     * Set the acceleration.
+     * @param {Vector} acceleration
+     * @returns {GameObject}
+     */
     GameObject.prototype.setAcceleration = function (acceleration) {
         this.acceleration = acceleration;
         return this;
     };
+    /**
+     * Set the friction.
+     * @param {number} friction
+     * @returns {GameObject}
+     */
     GameObject.prototype.setFriction = function (friction) {
         this.friction = friction;
         return this;
     };
+    /**
+     * Get the friction value.
+     * @returns {number}
+     */
     GameObject.prototype.getFriction = function () {
         if (this.friction == null) {
             return 0;
         }
         return this.friction;
     };
+    /**
+     * Update the velocity based on acceleration and optional override.
+     * @param {Object} velocity
+     */
     GameObject.prototype.updateVelocity = function (velocity) {
         if (velocity === void 0) { velocity = { x: null, y: null }; }
         this.velocity.x += this.acceleration.x;
@@ -147,9 +223,15 @@ var GameObject = /** @class */ (function () {
             this.velocity.y *= velocityScale;
         }
     };
+    /** Mark this object as deleted. */
     GameObject.prototype.remove = function () {
         this.deleted = true;
     };
+    /**
+     * Set the position of this object.
+     * @param {Object} position
+     * @returns {GameObject}
+     */
     GameObject.prototype.setPosition = function (position) {
         this.rectangle.x = position.x;
         this.rectangle.y = position.y;
@@ -157,21 +239,29 @@ var GameObject = /** @class */ (function () {
         this.shape.y = position.y;
         return this;
     };
+    /**
+     * Update position based on keysDown.
+     */
     GameObject.prototype.updatePositionBasedOnKeys = function () {
         this.velocity = new vector_1.Vector(0, 0);
-        if (this.keysDown.includes('ArrowUp') || this.keysDown.includes('w')) {
+        var keys = Array.from(this.keysDown);
+        if (keys.includes('ArrowUp') || keys.includes('w')) {
             this.velocity.y = -this.userControlledSpeed;
         }
-        if (this.keysDown.includes('ArrowRight') || this.keysDown.includes('d')) {
+        if (keys.includes('ArrowRight') || keys.includes('d')) {
             this.velocity.x = this.userControlledSpeed;
         }
-        if (this.keysDown.includes('ArrowDown') || this.keysDown.includes('s')) {
+        if (keys.includes('ArrowDown') || keys.includes('s')) {
             this.velocity.y = this.userControlledSpeed;
         }
-        if (this.keysDown.includes('ArrowLeft') || this.keysDown.includes('a')) {
+        if (keys.includes('ArrowLeft') || keys.includes('a')) {
             this.velocity.x = -this.userControlledSpeed;
         }
     };
+    /**
+     * Get the position of this object.
+     * @returns {Object}
+     */
     GameObject.prototype.getPosition = function () {
         return { x: this.shape.x, y: this.shape.y };
     };
@@ -218,11 +308,11 @@ var GameObject = /** @class */ (function () {
     };
     GameObject.prototype.handleKeysDown = function (keysDown) {
         if (this.controlledByKeyPad) {
-            this.keysDown = keysDown;
+            this.keysDown = new Set(keysDown);
         }
     };
     GameObject.prototype.handleKeyUp = function (keysDown, keyUp) {
-        this.keysDown = keysDown;
+        this.keysDown = new Set(keysDown);
         if (keyUp.includes('up')) {
         }
         if (keyUp.includes('right')) {
@@ -343,7 +433,7 @@ var GameObject = /** @class */ (function () {
         this.drawTraceLine(context);
     };
     GameObject.prototype.hasNoVelocity = function () {
-        return (this.velocity.x === 0 && this.velocity.y === 0 || (this.controlledByKeyPad && this.keysDown.length === 0));
+        return (this.velocity.x === 0 && this.velocity.y === 0 || (this.controlledByKeyPad && this.keysDown.size === 0));
     };
     GameObject.prototype.getCollisionByType = function (collisionType) {
         return this.currentCollisions.find(function (collision) {
@@ -351,34 +441,10 @@ var GameObject = /** @class */ (function () {
         });
     };
     GameObject.prototype.detectCollisions = function (object) {
-        if (object.ignoreCollisions) {
-            return;
-        }
-        // Find the sides of each rectangle
-        // Find the sides of each rectangle
-        var rect1Left = this.rectangle.x;
-        var rect1Right = this.rectangle.x + this.rectangle.width;
-        var rect1Top = this.rectangle.y;
-        var rect1Bottom = this.rectangle.y + this.rectangle.height;
-        var rect2Left = object.rectangle.x;
-        var rect2Right = object.rectangle.x + object.rectangle.width;
-        var rect2Top = object.rectangle.y;
-        var rect2Bottom = object.rectangle.y + object.rectangle.height;
-        // Check for collisions
-        if (rect1Right >= rect2Left && rect1Left <= rect2Right && rect1Bottom >= rect2Top && rect1Top <= rect2Bottom) {
-            // There is a collision
-            if (rect1Right >= rect2Left && rect1Left < rect2Left && this.velocity.x > 0) {
-                this.currentCollisions.push(new collision_1.Collision('right', this, object));
-            }
-            if (rect1Left <= rect2Right && rect1Right > rect2Right && this.velocity.x < 0) {
-                this.currentCollisions.push(new collision_1.Collision('left', this, object));
-            }
-            if (rect1Top <= rect2Bottom && rect1Bottom > rect2Bottom && this.velocity.y < 0) {
-                this.currentCollisions.push(new collision_1.Collision('top', this, object));
-            }
-            if (rect1Bottom >= rect2Top && rect1Top < rect2Top && this.velocity.y > 0) {
-                this.currentCollisions.push(new collision_1.Collision('bottom', this, object));
-            }
+        var collisions = collisions_1.Collisions.detect(this, object);
+        for (var _i = 0, collisions_2 = collisions; _i < collisions_2.length; _i++) {
+            var c = collisions_2[_i];
+            this.currentCollisions.push(c);
         }
     };
     GameObject.prototype.collisionExists = function (collisionType) {

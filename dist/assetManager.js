@@ -2,7 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AssetManager = void 0;
 var popup_1 = require("./popup");
+/**
+ * AssetManager class for managing and tracking asset loading.
+ */
 var AssetManager = /** @class */ (function () {
+    /**
+     * @param {HTMLCanvasElement} canvas
+     */
     function AssetManager(canvas) {
         this.assets = window.gamework.constants.ASSETS;
         this.loadedInterval = null;
@@ -10,6 +16,10 @@ var AssetManager = /** @class */ (function () {
         this.loadingProgress = 0;
         this.popup = new popup_1.Popup('Asset manager popup', null, canvas, "Loading assets...");
     }
+    /**
+     * Returns a promise that resolves when all assets are loaded.
+     * @returns {Promise<boolean>}
+     */
     AssetManager.prototype.assetsLoaded = function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
@@ -31,6 +41,10 @@ var AssetManager = /** @class */ (function () {
             }, 10);
         });
     };
+    /**
+     * Draw the loading progress popup and progress bar.
+     * @param {CanvasRenderingContext2D} context
+     */
     AssetManager.prototype.drawLoadingProgress = function (context) {
         var _this = this;
         if (this.allAssetsLoaded) {

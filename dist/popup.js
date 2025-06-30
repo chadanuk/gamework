@@ -19,12 +19,22 @@ exports.Popup = void 0;
 var gameObject_1 = require("./gameObject");
 var rectangle_1 = require("./rectangle");
 var textItem_1 = require("./textItem");
+/**
+ * Popup class for modal dialogs and overlays.
+ */
 var Popup = /** @class */ (function (_super) {
     __extends(Popup, _super);
+    /**
+     * @param {string} name
+     * @param {Object} scene
+     * @param {HTMLCanvasElement} canvas
+     * @param {string} [title='']
+     * @param {Object|null} [rectangle=null]
+     */
     function Popup(name, scene, canvas, title, rectangle) {
-        var _this = this;
         if (title === void 0) { title = ''; }
         if (rectangle === void 0) { rectangle = null; }
+        var _this = this;
         var _a, _b, _c;
         var popupWidth = 0.8 * canvas.width;
         var popupHeight = 0.8 * canvas.height;
@@ -39,10 +49,18 @@ var Popup = /** @class */ (function (_super) {
         _this.colours.backgroundColour = (_c = window.gamework.constants.COLOURS.modalBackgroundColour) !== null && _c !== void 0 ? _c : 'rgba(150, 150,255, 0.5)';
         return _this;
     }
+    /**
+     * Set the popup title.
+     * @param {string} title
+     * @returns {Popup}
+     */
     Popup.prototype.setTitle = function (title) {
         this.title.text = title;
         return this;
     };
+    /**
+     * Remove all buttons from the popup.
+     */
     Popup.prototype.clearButtons = function () {
         this.buttons.forEach(function (button) {
             button.remove();
@@ -50,13 +68,25 @@ var Popup = /** @class */ (function (_super) {
         });
         this.buttons = [];
     };
+    /**
+     * Remove the popup and its buttons.
+     */
     Popup.prototype.remove = function () {
         this.deleted = true;
         this.buttons = [];
     };
+    /**
+     * Get the last button added to the popup.
+     * @returns {Object|undefined}
+     */
     Popup.prototype.lastButton = function () {
         return this.buttons[this.buttons.length - 1];
     };
+    /**
+     * Add a button to the popup.
+     * @param {Object} button
+     * @returns {Popup}
+     */
     Popup.prototype.addButton = function (button) {
         var lastButton = this.lastButton();
         var lastY = lastButton === undefined ? this.title.rectangle.y : lastButton.rectangle.y;
@@ -71,6 +101,10 @@ var Popup = /** @class */ (function (_super) {
         this.buttons.push(button);
         return this;
     };
+    /**
+     * Draw the popup and its title.
+     * @param {CanvasRenderingContext2D} context
+     */
     Popup.prototype.draw = function (context) {
         context.beginPath();
         context.fillStyle = this.colours.overlayColour;

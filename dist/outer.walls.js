@@ -14,7 +14,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OuterWalls = void 0;
 var wall_1 = require("./wall");
 var WALL_DEPTH = window.gamework.WALL_DEPTH;
+/**
+ * OuterWalls class for managing the outer boundary walls of the game.
+ */
 var OuterWalls = /** @class */ (function () {
+    /**
+     * @param {Object} scene
+     * @param {Object|null} [gap=null]
+     * @param {Array} [wallsConfig]
+     */
     function OuterWalls(scene, gap, wallsConfig) {
         if (gap === void 0) { gap = null; }
         if (wallsConfig === void 0) { wallsConfig = [
@@ -31,6 +39,11 @@ var OuterWalls = /** @class */ (function () {
         this.gap = gap;
         this.generateWalls();
     }
+    /**
+     * Set the wall configuration and optional gap.
+     * @param {Array} wallsConfig
+     * @param {Object|null} gap
+     */
     OuterWalls.prototype.setWallsConfig = function (wallsConfig, gap) {
         this.removeWallsFromScene();
         this.walls = [];
@@ -38,9 +51,14 @@ var OuterWalls = /** @class */ (function () {
         this.gap = gap;
         this.generateWalls();
     };
+    /** Remove all walls from the scene. */
     OuterWalls.prototype.removeWallsFromScene = function () {
         this.scene.removeObjectsWithNameContaining('Wall');
     };
+    /**
+     * Find the wall index for the gap.
+     * @returns {number}
+     */
     OuterWalls.prototype.findWallIndexForGap = function () {
         var _this = this;
         if (!this.gap) {
@@ -53,6 +71,7 @@ var OuterWalls = /** @class */ (function () {
                 && (_this.gap.rectangle.y + _this.gap.rectangle.height) <= (pixelWallConfig.y + pixelWallConfig.h));
         });
     };
+    /** Split a wall to create a gap. */
     OuterWalls.prototype.splitWallForGap = function () {
         var pixelWallConfigIndex = this.findWallIndexForGap();
         var pixelWallConfig = this.pixelWallsConfig[pixelWallConfigIndex];
@@ -74,6 +93,7 @@ var OuterWalls = /** @class */ (function () {
         }
         this.pixelWallsConfig.push(newWall);
     };
+    /** Convert wall configuration to pixel values. */
     OuterWalls.prototype.convertWallConfigToPixels = function () {
         var _this = this;
         this.pixelWallsConfig = [];
@@ -88,6 +108,7 @@ var OuterWalls = /** @class */ (function () {
             _this.pixelWallsConfig.push(pixelWallConfig);
         });
     };
+    /** Generate the wall objects based on configuration. */
     OuterWalls.prototype.generateWalls = function () {
         var _this = this;
         this.convertWallConfigToPixels();

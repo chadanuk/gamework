@@ -18,8 +18,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TextItem = void 0;
 var gameObject_1 = require("./gameObject");
 var rectangle_1 = require("./rectangle");
+/**
+ * TextItem class for rendering text in the game.
+ */
 var TextItem = /** @class */ (function (_super) {
     __extends(TextItem, _super);
+    /**
+     * @param {Object} scene
+     * @param {string} name
+     * @param {Object} position
+     * @param {string} [fontSize='12px']
+     * @param {string} [fontType='serif']
+     * @param {string} [colour='#000000']
+     * @param {string} [text='']
+     */
     function TextItem(scene, name, position, fontSize, fontType, colour, text) {
         if (fontSize === void 0) { fontSize = '12px'; }
         if (fontType === void 0) { fontType = 'serif'; }
@@ -34,10 +46,19 @@ var TextItem = /** @class */ (function (_super) {
         _this.text = text;
         return _this;
     }
+    /**
+     * Set the text content.
+     * @param {string} text
+     * @returns {TextItem}
+     */
     TextItem.prototype.setText = function (text) {
         this.text = text;
         return this;
     };
+    /**
+     * Draw the text item.
+     * @param {CanvasRenderingContext2D} context
+     */
     TextItem.prototype.draw = function (context) {
         if (this.deleted) {
             return;

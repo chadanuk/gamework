@@ -37,10 +37,22 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Storage = void 0;
+/**
+ * Storage class for managing persistent key-value data in localStorage.
+ */
 var Storage = /** @class */ (function () {
+    /**
+     * @param {string} key
+     */
     function Storage(key) {
         this.key = key;
     }
+    /**
+     * Get a value by key, or all data if no key is provided.
+     * @param {string|null} [key=null]
+     * @param {*} [defaultValue=null]
+     * @returns {Promise<*>}
+     */
     Storage.prototype.get = function (key, defaultValue) {
         if (key === void 0) { key = null; }
         if (defaultValue === void 0) { defaultValue = null; }
@@ -61,6 +73,12 @@ var Storage = /** @class */ (function () {
             });
         });
     };
+    /**
+     * Set a value by key.
+     * @param {string} key
+     * @param {*} value
+     * @returns {Promise<void>}
+     */
     Storage.prototype.set = function (key, value) {
         return __awaiter(this, void 0, void 0, function () {
             var data;

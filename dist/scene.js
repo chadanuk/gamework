@@ -10,12 +10,19 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Scene = void 0;
+/**
+ * Represents a scene containing game objects and handling input/camera.
+ */
 var Scene = /** @class */ (function () {
+    /**
+     * @param {string|null} name
+     * @param {Object|null} game
+     */
     function Scene(name, game) {
         if (name === void 0) { name = null; }
         if (game === void 0) { game = null; }
         this.id = "scene.".concat(Math.floor(new Date().getTime() * Math.random()));
-        this.objects = [];
+        this.objects = new Map();
         this.objectsSelected = [];
         this.objectsHoveredOver = [];
         this.showHitBoxes = false;
@@ -28,69 +35,115 @@ var Scene = /** @class */ (function () {
             this.game.addScene(this);
         }
     }
+    /**
+     * Set the camera for this scene.
+     * @param {Object} camera
+     * @returns {Scene}
+     */
     Scene.prototype.setCamera = function (camera) {
         this.camera = camera;
         return this;
     };
+    /** Remove this scene and its objects. */
     Scene.prototype.remove = function () {
         this.deleted = true;
         this.clearObjects();
         this.game = null;
     };
+    /**
+     * Set the game for this scene.
+     * @param {Object} game
+     * @returns {Scene}
+     */
     Scene.prototype.setGame = function (game) {
         this.game = game;
         return this;
     };
+    /**
+     * Show or hide hitboxes for all objects.
+     * @param {boolean} show
+     * @returns {Scene}
+     */
     Scene.prototype.setShowHitBoxes = function (show) {
         this.showHitBoxes = show;
         return this;
     };
+    /**
+     * Add an object to the scene.
+     * @param {Object} object
+     * @returns {Scene}
+     */
     Scene.prototype.addObject = function (object) {
-        var foundObjectIndex = this.findObjectIndex(object);
-        if (foundObjectIndex) {
-            this.objects[foundObjectIndex] = object;
+        if (this.objects.has(object.id)) {
+            this.objects.set(object.id, object);
             console.warn("object \"".concat(object.name, "\" already exists, updating"));
-            return;
+            return this;
         }
         object.setScene(this);
-        this.objects.push(object);
+        this.objects.set(object.id, object);
         return this;
     };
+    /** Remove all objects from the scene. */
     Scene.prototype.clearObjects = function () {
-        var _this = this;
-        this.objects.forEach(function (object, objectIndex) {
+        this.objects.forEach(function (object) {
             object.remove();
-            delete _this.objects[objectIndex];
         });
+        this.objects.clear();
         return this;
     };
+    /**
+     * Find an object by name.
+     * @param {string} name
+     * @returns {Object|undefined}
+     */
     Scene.prototype.findObjectByName = function (name) {
-        return this.objects.find(function (o) { return o.name === name; });
+        for (var _i = 0, _a = this.objects.values(); _i < _a.length; _i++) {
+            var object = _a[_i];
+            if (object.name === name)
+                return object;
+        }
+        return undefined;
     };
+    /**
+     * Remove objects whose name contains a substring.
+     * @param {string} stringPartial
+     */
     Scene.prototype.removeObjectsWithNameContaining = function (stringPartial) {
-        var _this = this;
-        this.objects.forEach(function (object, objectIndex) {
+        for (var _i = 0, _a = this.objects.entries(); _i < _a.length; _i++) {
+            var _b = _a[_i], id = _b[0], object = _b[1];
             if (object.name.includes(stringPartial)) {
-                _this.objects[objectIndex].remove();
-                delete (_this.objects[objectIndex]);
+                object.remove();
+                this.objects.delete(id);
             }
-        });
+        }
     };
+    /** Hide this scene. */
     Scene.prototype.hide = function () {
         this.hidden = true;
     };
+    /** Show this scene. */
     Scene.prototype.show = function () {
         this.hidden = false;
     };
+    /**
+     * Find the index of an object in the scene (by id).
+     * @param {Object} object
+     * @returns {number|null}
+     */
     Scene.prototype.findObjectIndex = function (object) {
-        var foundObjectIndex = this.objects.findIndex(function (lookupObject) {
-            return lookupObject !== undefined && lookupObject.id === object.id;
-        });
-        if (foundObjectIndex < 0) {
-            return null;
+        var idx = 0;
+        for (var _i = 0, _a = this.objects.values(); _i < _a.length; _i++) {
+            var obj = _a[_i];
+            if (obj.id === object.id)
+                return idx;
+            idx++;
         }
-        return foundObjectIndex;
+        return null;
     };
+    /**
+     * Handle keys down for all objects.
+     * @param {Array<string>} keysDown
+     */
     Scene.prototype.handleKeysDown = function (keysDown) {
         this.objects.forEach(function (object) {
             if (object.controlledByKeyPad) {
@@ -98,6 +151,11 @@ var Scene = /** @class */ (function () {
             }
         });
     };
+    /**
+     * Handle key up for all objects.
+     * @param {Array<string>} keysDown
+     * @param {string} keyUp
+     */
     Scene.prototype.handleKeyUp = function (keysDown, keyUp) {
         this.objects.forEach(function (object) {
             if (object.controlledByKeyPad) {
@@ -105,6 +163,10 @@ var Scene = /** @class */ (function () {
             }
         });
     };
+    /**
+     * Handle pointer down event for all objects.
+     * @param {Object} position
+     */
     Scene.prototype.handlePointerDown = function (position) {
         var _this = this;
         if (this.deleted || this.hidden) {
@@ -118,6 +180,12 @@ var Scene = /** @class */ (function () {
             }
         });
     };
+    /**
+     * Handle pointer movement for all objects.
+     * @param {Object} movement
+     * @param {Object} pointerPosition
+     * @param {boolean} pointerIsDown
+     */
     Scene.prototype.handlePointerMovement = function (movement, pointerPosition, pointerIsDown) {
         var _this = this;
         if (this.deleted || this.hidden) {
@@ -125,6 +193,7 @@ var Scene = /** @class */ (function () {
             return;
         }
         var previousObjectsHoveredOver = __spreadArray([], this.objectsHoveredOver, true);
+        this.objectsHoveredOver = [];
         this.objects.forEach(function (object) {
             var wasHovered = previousObjectsHoveredOver.findIndex(function (previousObjectsHoveredOverObject) {
                 return object.id === previousObjectsHoveredOverObject.id;
@@ -143,6 +212,10 @@ var Scene = /** @class */ (function () {
             }
         });
     };
+    /**
+     * Handle pointer end for all objects.
+     * @param {Object} movement
+     */
     Scene.prototype.handlePointerEnd = function (movement) {
         if (this.deleted || this.hidden) {
             this.objectsSelected = [];
@@ -153,13 +226,16 @@ var Scene = /** @class */ (function () {
         });
         this.objectsSelected = [];
     };
+    /**
+     * Draw all objects in the scene.
+     * @param {CanvasRenderingContext2D} context
+     */
     Scene.prototype.draw = function (context) {
         var _this = this;
         if (this.deleted || this.hidden) {
             return;
         }
         if (this.camera) {
-            // context.translate(-x, -y);
             this.camera.preDraw(context);
         }
         this.objects.forEach(function (object) {

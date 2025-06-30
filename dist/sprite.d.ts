@@ -1,7 +1,15 @@
+/**
+ * Sprite class for handling sprite sheet animation and drawing.
+ */
 export class Sprite {
-    constructor(imageSrc: any, gameObject: any, animate?: boolean);
+    /**
+     * @param {string} imageSrc
+     * @param {Object} gameObject
+     * @param {boolean} [animate=true]
+     */
+    constructor(imageSrc: string, gameObject: any, animate?: boolean);
     gameObject: any;
-    imageSrc: any;
+    imageSrc: string;
     loaded: boolean;
     image: HTMLImageElement;
     animate: boolean;
@@ -11,17 +19,59 @@ export class Sprite {
     frameRate: number;
     column: number;
     row: number;
-    setColumns(value: any): this;
-    columns: any;
-    setRows(value: any): this;
-    rows: any;
-    setColumn(value: any): this;
-    setRow(value: any): this;
-    nextColumn(): void;
-    nextRow(): void;
-    nextImage(): void;
-    setGameObject(gameObject: any): this;
-    load(): void;
-    draw(context: any): void;
+    /**
+     * Set the number of columns in the sprite sheet.
+     * @param {number} value
+     * @returns {Sprite}
+     */
+    setColumns(value: number): Sprite;
+    columns: number;
+    /**
+     * Set the number of rows in the sprite sheet.
+     * @param {number} value
+     * @returns {Sprite}
+     */
+    setRows(value: number): Sprite;
+    rows: number;
+    /**
+     * Set the current column.
+     * @param {number} value
+     * @returns {Sprite}
+     */
+    setColumn(value: number): Sprite;
+    /**
+     * Set the current row.
+     * @param {number} value
+     * @returns {Sprite}
+     */
+    setRow(value: number): Sprite;
+    /**
+     * Advance to the next column.
+     */
+    _nextColumn(): void;
+    /**
+     * Advance to the next row.
+     */
+    _nextRow(): void;
+    /**
+     * Advance to the next image/frame.
+     */
+    _nextImage(): void;
+    /**
+     * Set the game object for this sprite.
+     * @param {Object} gameObject
+     * @returns {Sprite}
+     */
+    setGameObject(gameObject: any): Sprite;
+    /**
+     * Load the image and handle errors.
+     * @private
+     */
+    private _load;
+    /**
+     * Draw the sprite.
+     * @param {CanvasRenderingContext2D} context
+     */
+    draw(context: CanvasRenderingContext2D): void;
 }
 //# sourceMappingURL=sprite.d.ts.map

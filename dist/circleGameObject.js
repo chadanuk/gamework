@@ -19,8 +19,18 @@ exports.CircleGameObject = void 0;
 var collision_1 = require("./collision");
 var gameObject_1 = require("./gameObject");
 var rectangle_1 = require("./rectangle");
+/**
+ * CircleGameObject class for circular game objects.
+ */
 var CircleGameObject = /** @class */ (function (_super) {
     __extends(CircleGameObject, _super);
+    /**
+     * @param {Object} scene
+     * @param {string} name
+     * @param {Object} circle
+     * @param {Object} velocity
+     * @param {number} [rotation=0]
+     */
     function CircleGameObject(scene, name, circle, velocity, rotation) {
         if (rotation === void 0) { rotation = 0; }
         var _this = _super.call(this, scene, name, new rectangle_1.Rectangle(circle.x - circle.radius, circle.y - circle.radius, circle.radius * 2, circle.radius * 2), { velocity: velocity, rotation: rotation }) || this;
@@ -28,6 +38,11 @@ var CircleGameObject = /** @class */ (function (_super) {
         _this.shape = _this.circle;
         return _this;
     }
+    /**
+     * Set the position of the circle game object.
+     * @param {Object} position
+     * @returns {CircleGameObject}
+     */
     CircleGameObject.prototype.setPosition = function (position) {
         this.rectangle.x = position.x - this.circle.radius;
         this.rectangle.y = position.y - this.circle.radius;
@@ -37,9 +52,17 @@ var CircleGameObject = /** @class */ (function (_super) {
         this.circle.y = position.y;
         return this;
     };
+    /**
+     * Detect collisions with another circle game object.
+     * @param {Object} object
+     */
     CircleGameObject.prototype.detectCollisionsWithOtherCircle = function (object) {
-        // ToDO detect circles colliding
+        // TODO: Implement circle-circle collision detection
     };
+    /**
+     * Detect collisions with a rectangle game object.
+     * @param {Object} object
+     */
     CircleGameObject.prototype.detectCollisionsWithRectangle = function (object) {
         if (object.ignoreCollisions) {
             return;
@@ -67,6 +90,10 @@ var CircleGameObject = /** @class */ (function (_super) {
             }
         }
     };
+    /**
+     * Detect collisions with another object.
+     * @param {Object} object
+     */
     CircleGameObject.prototype.detectCollisions = function (object) {
         if (object instanceof CircleGameObject) {
             this.detectCollisionsWithOtherCircle(object);
@@ -74,6 +101,10 @@ var CircleGameObject = /** @class */ (function (_super) {
         }
         this.detectCollisionsWithRectangle(object);
     };
+    /**
+     * Draw the hitbox for the circle game object.
+     * @param {CanvasRenderingContext2D} context
+     */
     CircleGameObject.prototype.drawHitBox = function (context) {
         if (!this.showHitBox) {
             return;

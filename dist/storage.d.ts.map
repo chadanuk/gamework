@@ -1,1 +1,1 @@
-{"version":3,"file":"storage.d.ts","sourceRoot":"","sources":["../src/storage.js"],"names":[],"mappings":"AAAA;IACI,sBAEC;IADG,SAAc;IAGlB,iDAQC;IAED,yCAQC;CACJ"}
+{"version":3,"file":"storage.d.ts","sourceRoot":"","sources":["../src/storage.js"],"names":[],"mappings":"AAAA;;GAEG;AACH;IACI;;OAEG;IACH,iBAFW,MAAM,EAIhB;IADG,YAAc;IAGlB;;;;;OAKG;IACH,UAJW,MAAM,GAAC,IAAI,uBAET,YAAU,CAQtB;IAED;;;;;OAKG;IACH,SAJW,MAAM,eAEJ,QAAQ,IAAI,CAAC,CASzB;CACJ"}

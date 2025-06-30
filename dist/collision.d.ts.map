@@ -1,1 +1,1 @@
-{"version":3,"file":"collision.d.ts","sourceRoot":"","sources":["../src/collision.js"],"names":[],"mappings":"AAAA;IACI,mDAIC;IAHG,UAAgB;IAChB,aAAsB;IACtB,aAAsB;IAG1B,mBAQC;CACJ"}
+{"version":3,"file":"collision.d.ts","sourceRoot":"","sources":["../src/collision.js"],"names":[],"mappings":"AAAA;;GAEG;AACH;IACI;;;;OAIG;IACH,kBAJW,MAAM,8BAQhB;IAHG,aAAgB;IAChB,aAAsB;IACtB,aAAsB;IAG1B;;;OAGG;IACH,eAFa,MAAM,CAUlB;CACJ"}

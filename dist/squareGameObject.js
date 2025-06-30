@@ -17,6 +17,9 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SquareGameObject = void 0;
 var gameObject_1 = require("./gameObject");
+/**
+ * SquareGameObject class for square-shaped game objects.
+ */
 var SquareGameObject = /** @class */ (function (_super) {
     __extends(SquareGameObject, _super);
     function SquareGameObject() {
